@@ -18,18 +18,18 @@ export default function UnitPage() {
             {
                 (!currentUnitPageMetadata.previousUnit) ? 
                 (<></>) : 
-                (<Link to={"/learn/"+currentUnitPageMetadata.previousUnit}>{currentUnitPageMetadata.previousUnit}</Link>)
+                (<Link to={"/units/"+currentUnitPageMetadata.previousUnit}>{currentUnitPageMetadata.previousUnit}</Link>)
             }
             <br/>
             {
                 (!currentUnitPageMetadata.nextUnit) ? 
                 (<></>) : 
-                (<Link to={"/learn/"+currentUnitPageMetadata.nextUnit}>{currentUnitPageMetadata.nextUnit}</Link>)
+                (<Link to={"/units/"+currentUnitPageMetadata.nextUnit}>{currentUnitPageMetadata.nextUnit}</Link>)
             }
             <br/><br/>
             { currentUnitPageMetadata.chapters.map(
                     (chapterMetadata, index) => (<div key={index}>
-                        <Link to={"?c="+chapterMetadata.segment}>{chapterMetadata.name}</Link>
+                        <Link to={"/learn/"+chapterMetadata.segment}>{chapterMetadata.name}</Link>
                         </div>)
                 )}
         </>
