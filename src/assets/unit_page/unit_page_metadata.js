@@ -6,7 +6,7 @@ const unitPageMetadata = {
         chapters: [
             {name: "거시경제 기본 용어", segment: "interest"},
             {name: "주식이란?", segment: "share_basic"},
-            {name: "배당", segement: "dividend"},
+            {name: "배당", segment: "dividend"},
             {name: "재무제표", segment: "financial_statements"},
         ]
     },
