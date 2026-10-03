@@ -4,16 +4,16 @@ import { createRoot } from "react-dom/client"
 import unitPageMetadata from "../assets/unit_page/unit_page_metadata.js"
 
 export default function UnitPage() {
-    const { unitIndex } = useParams();
-    const currentUnitPageMetadata = unitPageMetadata[unitIndex];
+    const { unitName } = useParams();
+    const currentUnitPageMetadata = unitPageMetadata[unitName];
 
     if(!currentUnitPageMetadata) {
-        return(<h1>'{unitIndex}'라는 이름의 유닛은 존재하지 않습니다.</h1>)
+        return(<h1>'{unitName}'라는 이름의 유닛은 존재하지 않습니다.</h1>)
     }
 
     return(
         <>
-            <h1>{unitIndex}</h1>
+            <h1>{unitName}</h1>
             <h2>{currentUnitPageMetadata.description}</h2>
             {
                 (!currentUnitPageMetadata.previousUnit) ? 

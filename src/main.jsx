@@ -9,7 +9,7 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="units/:unitIndex" element={<UnitPage></UnitPage>}/>
+                <Route path="units/:unitName" element={<UnitPage></UnitPage>}/>
             </Routes>
         </BrowserRouter>
     </StrictMode>
