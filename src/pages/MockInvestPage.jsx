@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import ScenarioCard from "../components/mock_invest/ScenarioCard";
+import TradeMain from "../components/mock_invest/TradeMain";
 
 export default function MockInvestPage() {
   const [step, setStep] = useState("select");
@@ -14,11 +15,10 @@ export default function MockInvestPage() {
 
   if (step === "trade") {
     return (
-      <>
-        <h1>{selectedScenario.stockName} · {selectedScenario.startDate}</h1>
-        <p>모의투자 화면</p>
-        <button onClick={() => setStep("select")}>시나리오 다시 고르기</button>
-      </>
+      <TradeMain
+        scenario={selectedScenario}
+        onBack={() => setStep("select")}
+      />
     );
   }
 
