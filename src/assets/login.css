@@ -1,0 +1,218 @@
+* {
+  box-sizing: border-box;
+}
+
+.login-screen {
+  position: relative;
+  width: min(100%, 393px);
+  height: min(100svh, 852px);
+  min-height: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 270px 310px at -18% -4%, #0114e9 0%, #3b72ff 38%, transparent 78%),
+    radial-gradient(ellipse 205px 280px at 0% 4%, #a7c0ff 0%, #dee8ff 45%, transparent 77%),
+    radial-gradient(ellipse 280px 370px at 106% 107%, #0114e9 0%, #3b72ff 42%, transparent 78%),
+    radial-gradient(ellipse 210px 290px at 100% 98%, #a7c0ff 0%, #dee8ff 47%, transparent 78%),
+    #fff;
+}
+
+.login-pattern {
+  position: absolute;
+  inset: -14px -14px;
+  display: grid;
+  grid-template-columns: repeat(8, 58.9px);
+  grid-auto-rows: 58.9px;
+  justify-content: center;
+  align-content: space-between;
+  transform: rotate(0.5deg);
+  -webkit-mask-image:
+    radial-gradient(ellipse 245px 250px at 0% 0%, #000 8%, transparent 100%),
+    radial-gradient(ellipse 255px 300px at 100% 100%, #000 5%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 245px 250px at 0% 0%, #000 8%, transparent 100%),
+    radial-gradient(ellipse 255px 300px at 100% 100%, #000 5%, transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+
+.login-pattern-tile {
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 5px;
+  background: rgb(255 255 255 / 20%);
+  box-shadow: inset 0 0 10px rgb(255 255 255 / 16%);
+}
+
+.login-status {
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  left: 24px;
+  right: 27.6px;
+  display: flex;
+  height: 21px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-time {
+  width: 54px;
+  font-family: "SF Pro Text", -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: -0.32px;
+  text-align: center;
+}
+
+.login-status-icons {
+  display: flex;
+  width: 77.4px;
+  height: 14px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-status-icons svg {
+  display: block;
+  width: 18px;
+  height: 13px;
+  fill: #000;
+}
+
+.login-status-icons .login-battery {
+  width: 28px;
+  height: 14px;
+  fill: none;
+  stroke: rgb(0 0 0 / 40%);
+  stroke-width: 1.5px;
+}
+
+.login-status-icons .login-battery-fill {
+  fill: #000;
+  stroke: none;
+}
+
+.login-title {
+  position: absolute;
+  z-index: 1;
+  top: 247px;
+  left: 24px;
+  width: 345px;
+  height: 152px;
+  margin: 0;
+  color: #000;
+  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 76px;
+  letter-spacing: -2px;
+}
+
+.login-actions {
+  position: absolute;
+  z-index: 1;
+  top: 718px;
+  right: 24px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-signup {
+  width: 176px;
+  height: 17px;
+  margin: 0;
+  color: #fff;
+  font-family: Inter, Pretendard, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  white-space: nowrap;
+}
+
+.login-kakao {
+  display: flex;
+  width: 100%;
+  height: 45px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 24.5px;
+  background: #fee500;
+  color: #191600;
+  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.login-kakao:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.login-feedback {
+  max-width: 100%;
+  margin: 2px 0 0;
+  color: #24314a;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.login-feedback--error {
+  color: #c62828;
+}
+
+.login-kakao-icon {
+  display: block;
+  width: 18px;
+  height: 17px;
+  flex: none;
+  fill: currentColor;
+}
+
+.login-home-indicator {
+  position: absolute;
+  z-index: 1;
+  bottom: 8px;
+  left: 50%;
+  width: 134px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 100px;
+  background: #000;
+}
+
+@media (max-height: 700px) {
+  .login-screen {
+    min-height: 0;
+  }
+
+  .login-title {
+    top: 29%;
+  }
+
+  .login-actions {
+    top: auto;
+    bottom: 37px;
+  }
+}
