@@ -2,9 +2,14 @@ import { useState } from "react";
 
 import FinancialModal from "./FinancialModal";
 
-export default function CompanyInfo({ scenario, onBack }) {
+export default function CompanyInfo({ scenario, onBack, onViewFinancials }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { stockCode, marketCap, roe, per, pbr } = scenario.companyInfo;
+
+  const handleOpenModal = () => {
+    onViewFinancials();
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -20,7 +25,7 @@ export default function CompanyInfo({ scenario, onBack }) {
       <p>PER {per}</p>
       <p>PBR {pbr}</p>
 
-      <button onClick={() => setIsModalOpen(true)}>재무제표 보기</button>
+      <button onClick={handleOpenModal}>재무제표 보기</button>
 
       {isModalOpen && (
         <FinancialModal

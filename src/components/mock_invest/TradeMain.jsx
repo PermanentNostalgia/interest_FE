@@ -2,13 +2,18 @@ import { useState } from "react";
 
 import CompanyInfo from "./CompanyInfo";
 import SafetyGuardBanner from "./SafetyGuardBanner";
+import {
+  INITIAL_QUANTITY,
+  calculateProfit,
+} from "../../utils/mock_invest/tradeUtils";
 
-const INITIAL_QUANTITY = 20;
-
-export default function TradeMain({ scenario, onBack }) {
+export default function TradeMain({ scenario, onBack, onFinish }) {
   const [view, setView] = useState("main");
   const [hasCheckedCompanyInfo, setHasCheckedCompanyInfo] = useState(false);
+  //hasCheckedCompanyInfo는 제무제표 열어봤는지
+  const [hasCheckedFinancials, setHasCheckedFinancials] = useState(false);
   const [pendingTrade, setPendingTrade] = useState(null);
+  const [trades, setTrades] = useState([]);
 
   const [dayIndex, setDayIndex] = useState(0);
   const [skipDays, setSkipDays] = useState(1);
@@ -18,7 +23,8 @@ export default function TradeMain({ scenario, onBack }) {
   const lastIndex = scenario.prices.length - 1;
   const currentPrice = scenario.prices[dayIndex];
   const evaluationAmount = currentPrice * quantity;
-  const profit = (currentPrice - averagePrice) * quantity;
+  const initialValue = scenario.prices[0] * INITIAL_QUANTITY;
+  const profit = calculateProfit(initialValue, evaluationAmount, trades);
 
   const openCompanyInfo = () => {
     setHasCheckedCompanyInfo(true);
@@ -31,6 +37,8 @@ export default function TradeMain({ scenario, onBack }) {
   };
 
   const executeTrade = (type) => {
+    if (type === "sell" && quantity === 0) return;
+
     if (type === "buy") {
       const newAveragePrice = Math.round(
         (averagePrice * quantity + currentPrice) / (quantity + 1)
@@ -38,9 +46,19 @@ export default function TradeMain({ scenario, onBack }) {
       setAveragePrice(newAveragePrice);
       setQuantity(quantity + 1);
     } else {
-      if (quantity === 0) return;
       setQuantity(quantity - 1);
     }
+
+    setTrades([
+      ...trades,
+      {
+        dayIndex,
+        type,
+        price: currentPrice,
+        quantity: 1,
+        checkedCompanyInfo: hasCheckedCompanyInfo,
+      },
+    ]);
   };
 
   const requestTrade = (type) => {
@@ -56,9 +74,23 @@ export default function TradeMain({ scenario, onBack }) {
     setPendingTrade(null);
   };
 
+  const handleFinish = () => {
+    onFinish({
+      profit,
+      rate: (profit / initialValue) * 100,
+      finalDay: dayIndex + 1,
+      trades,
+      hasCheckedFinancials,
+    });
+  };
+
   if (view === "company") {
     return (
-      <CompanyInfo scenario={scenario} onBack={() => setView("main")} />
+      <CompanyInfo
+        scenario={scenario}
+        onBack={() => setView("main")}
+        onViewFinancials={() => setHasCheckedFinancials(true)}
+      />
     );
   }
 
@@ -81,7 +113,7 @@ export default function TradeMain({ scenario, onBack }) {
       <h3>평가금액</h3>
       <h1>{evaluationAmount.toLocaleString()}원</h1>
       <p>
-        평가손익 {profit >= 0 ? "+" : ""}
+        총 손익 {profit >= 0 ? "+" : ""}
         {profit.toLocaleString()}원
       </p>
 
@@ -100,6 +132,8 @@ export default function TradeMain({ scenario, onBack }) {
 
       <p>보유 수량 {quantity}주</p>
       <p>매입 평균가 {averagePrice.toLocaleString()}원</p>
+
+      <button onClick={handleFinish}>거래 마무리하고 결과 보기</button>
     </>
   );
 }
