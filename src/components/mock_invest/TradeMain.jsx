@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import CompanyInfo from "./CompanyInfo";
 import SafetyGuardBanner from "./SafetyGuardBanner";
+import PriceChart from "./PriceChart";
 import {
   INITIAL_QUANTITY,
   calculateProfit,
@@ -111,6 +112,11 @@ export default function TradeMain({ scenario, onBack, onFinish }) {
       </div>
 
       <h3>평가금액</h3>
+            <p>
+        총 손익 {profit >= 0 ? "+" : ""}
+        {profit.toLocaleString()}원
+      </p>
+            <PriceChart prices={scenario.prices} dayIndex={dayIndex} />
       <h1>{evaluationAmount.toLocaleString()}원</h1>
       <p>
         총 손익 {profit >= 0 ? "+" : ""}
