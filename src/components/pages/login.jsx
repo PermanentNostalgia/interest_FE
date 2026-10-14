@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import loginLogo from "../../assets/login-logo.png";
 import "./login.css";
 
 const patternTiles = Array.from({ length: 105 }, (_, index) => (
@@ -11,7 +12,8 @@ function getRedirectUri() {
   return `${window.location.origin}${window.location.pathname}`;
 }
 
-function getKakaoLoginEndpoint(apiBaseUrl) {
+function getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint) {
+  if (kakaoLoginEndpoint) return kakaoLoginEndpoint;
   return `${apiBaseUrl.replace(/\/+$/, "")}/api/auth/kakao`;
 }
 
@@ -52,9 +54,21 @@ function KakaoIcon() {
   );
 }
 
+function LoginLogo() {
+  return (
+    <img
+      className="login-logo"
+      src={loginLogo}
+      aria-label="금리도 모르면서 로고"
+      alt="금리도 모르면서 로고"
+    />
+  );
+}
+
 export default function Login({
   kakaoRestApiKey = "1304ac232764438b146d93b3f07f9624",
   apiBaseUrl = "",
+  kakaoLoginEndpoint = import.meta.env.VITE_KAKAO_LOGIN_ENDPOINT,
   onLoginSuccess,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -106,32 +120,47 @@ export default function Login({
 
     const redirectUri = getRedirectUri();
 
-    fetch(getKakaoLoginEndpoint(apiBaseUrl), {
+    fetch(getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint), {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code: authorizationCode, redirectUri }),
     })
       .then(async (response) => {
-        const responseBody = await response.json();
+        const responseText = await response.text();
+        let responseBody = {};
+        if (responseText.trim()) {
+          try {
+            responseBody = JSON.parse(responseText);
+          } catch {
+            throw new Error(
+              `로그인 서버가 올바른 JSON 응답을 반환하지 않았습니다. (HTTP ${response.status})`,
+            );
+          }
+        }
+
         if (!response.ok) {
           throw new Error(
-            responseBody.message || "카카오 로그인 처리에 실패했습니다.",
+            responseBody?.message ||
+              `카카오 로그인 처리에 실패했습니다. (HTTP ${response.status})`,
           );
         }
         return responseBody;
       })
       .then((responseBody) => {
         setStatusMessage("로그인되었습니다.");
-        if (onLoginSuccess) onLoginSuccess(responseBody.user);
+        if (onLoginSuccess) onLoginSuccess(responseBody?.user);
       })
       .catch((error) => {
         setErrorMessage(
-          error.message || "서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+          error instanceof TypeError
+            ? "로그인 서버에 연결할 수 없습니다. 서버 상태와 CORS 설정을 확인해 주세요."
+            : error.message ||
+                "서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.",
         );
       })
       .finally(() => setIsLoading(false));
-  }, [apiBaseUrl, onLoginSuccess]);
+  }, [apiBaseUrl, kakaoLoginEndpoint, onLoginSuccess]);
 
   function startKakaoLogin() {
     setErrorMessage("");
@@ -183,11 +212,14 @@ export default function Login({
         <StatusIcons />
       </div>
 
-      <h1 className="login-title">
-        금리도
-        <br />
-        모르면서
-      </h1>
+      <div className="login-brand">
+        <LoginLogo />
+        <h1 className="login-title">
+          금리도
+          <br />
+          모르면서
+        </h1>
+      </div>
 
       <section className="login-actions" aria-label="계정 로그인">
         <p className="login-signup">SNS 계정으로 간편 가입하기</p>
