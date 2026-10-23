@@ -1,0 +1,188 @@
+* {
+  box-sizing: border-box;
+}
+
+.tuto-screen {
+  position: relative;
+  width: min(100%, 393px);
+  min-height: 600px;
+  height: min(100svh, 852px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tuto-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 330px 420px at 0% 102%, #0114e9 0%, #3b72ff 36%, transparent 77%),
+    radial-gradient(ellipse 260px 330px at 54% 105%, #a7c0ff 0%, #dee8ff 45%, transparent 78%),
+    radial-gradient(ellipse 180px 310px at 105% 112%, #dee8ff 0%, transparent 76%),
+    #fff;
+}
+
+.tuto-background::after {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 50%);
+  content: "";
+}
+
+.tuto-heading {
+  position: absolute;
+  z-index: 1;
+  top: min(96px, 11.27svh);
+  right: 24px;
+  left: 24px;
+}
+
+.tuto-eyebrow {
+  margin: 0 0 8px;
+  color: #969696;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+.tuto-heading h1 {
+  margin: 0;
+  color: #000;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 29px;
+}
+
+.tuto-options {
+  position: absolute;
+  z-index: 1;
+  top: min(184px, 21.6svh);
+  right: 24px;
+  left: 24px;
+  display: grid;
+  gap: min(20px, 2.35svh);
+}
+
+.tuto-option {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: min(180px, 21.13svh);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border: 1px solid rgb(255 255 255 / 82%);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse 80% 95% at 98% 105%, rgb(181 190 255 / 36%), transparent 74%),
+    linear-gradient(135deg, rgb(239 241 251 / 94%), rgb(247 248 255 / 92%));
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 18%),
+    inset 0 1px 1px rgb(255 255 255 / 95%);
+  color: #000;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+  backdrop-filter: blur(18px);
+  appearance: none;
+}
+
+.tuto-option::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgb(255 255 255 / 42%), transparent 52%);
+  content: "";
+  pointer-events: none;
+}
+
+.tuto-option:nth-child(2) {
+  background:
+    radial-gradient(ellipse 65% 75% at 100% 100%, rgb(171 164 255 / 48%), transparent 75%),
+    linear-gradient(145deg, rgb(250 251 253 / 96%), rgb(255 255 255 / 92%));
+}
+
+.tuto-option:nth-child(3) {
+  background:
+    radial-gradient(ellipse 70% 100% at 100% 100%, rgb(186 195 255 / 54%), transparent 76%),
+    radial-gradient(ellipse 55% 80% at 0% 5%, rgb(222 229 255 / 68%), transparent 78%),
+    linear-gradient(135deg, rgb(243 245 255 / 94%), rgb(255 255 255 / 94%));
+}
+
+.tuto-option:focus-visible {
+  outline: 3px solid #3b72ff;
+  outline-offset: 3px;
+}
+
+.tuto-option:active {
+  transform: scale(0.985);
+}
+
+.tuto-option--selected {
+  border-color: #3b72ff;
+  box-shadow:
+    0 4px 14px rgb(1 20 233 / 20%),
+    inset 0 0 0 1px rgb(255 255 255 / 90%);
+}
+
+.tuto-option-title {
+  position: relative;
+  z-index: 1;
+  font-size: min(20px, 2.35svh);
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.tuto-option-description {
+  position: relative;
+  z-index: 1;
+  color: #969696;
+  font-size: min(12px, 1.41svh);
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.tuto-tabbar {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: min(44px, 5.16svh);
+  padding-top: min(10px, 1.17svh);
+  backdrop-filter: blur(10px);
+}
+
+.tuto-home-indicator {
+  position: absolute;
+  bottom: min(8px, 0.94svh);
+  left: 50%;
+  width: 134px;
+  height: min(5px, 0.59svh);
+  transform: translateX(-50%);
+  border-radius: 100px;
+  background: #000;
+}
+
+@media (max-width: 392px) {
+  .tuto-option-title {
+    font-size: clamp(16px, 5vw, 20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuto-option {
+    transition: none;
+  }
+}

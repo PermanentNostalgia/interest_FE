@@ -16,24 +16,6 @@ const knowledgeLevels = [
   },
 ];
 
-function StatusIcons() {
-  return (
-    <span className="tuto-status-icons" aria-hidden="true">
-      <svg viewBox="0 0 18 12">
-        <path d="M1 11V8h3v3M6 11V6h3v5m2 0V3h3v8m2 0V1h3v10" />
-      </svg>
-      <svg viewBox="0 0 17 13">
-        <path d="M1 4.5C5.3.8 11.7.8 16 4.5L8.5 12 1 4.5Z" />
-      </svg>
-      <svg className="tuto-battery" viewBox="0 0 28 14">
-        <rect x=".75" y=".75" width="24" height="12.5" rx="3.5" />
-        <path d="M26.5 4.5v5" />
-        <rect className="tuto-battery-fill" x="3" y="3" width="19" height="8" rx="2" />
-      </svg>
-    </span>
-  );
-}
-
 export default function Tuto({ onSelect }) {
   const [selectedLevel, setSelectedLevel] = useState(null);
 
@@ -45,11 +27,6 @@ export default function Tuto({ onSelect }) {
   return (
     <main className="tuto-screen">
       <div className="tuto-background" aria-hidden="true" />
-
-      <div className="tuto-status" aria-label="상태 표시줄">
-        <span className="tuto-time">9:41</span>
-        <StatusIcons />
-      </div>
 
       <header className="tuto-heading">
         <p className="tuto-eyebrow">시작하기 전에</p>
