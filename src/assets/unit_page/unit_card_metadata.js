@@ -1,6 +1,6 @@
 const unitPageMetadata = {
     unit1: {
-        previousUnit: null,
+        previousUnit: "unit5",
         nextUnit: "unit2",
         description: "주식 기초",
         chapters: [
@@ -22,8 +22,28 @@ const unitPageMetadata = {
     },
     unit3: {
         previousUnit: "unit2",
-        nextUnit: null,
+        nextUnit: "unit1",
         description: "파생상품",
+        chapters: [
+            {name: "선물", segment: "future"},
+            {name: "옵션", segment: "option"},
+            {name: "FX마진", segment: "fx"},
+        ]
+    },
+    unit4: {
+        previousUnit: "unit3",
+        nextUnit: "unit5",
+        description: "555555",
+        chapters: [
+            {name: "선물", segment: "future"},
+            {name: "옵션", segment: "option"},
+            {name: "FX마진", segment: "fx"},
+        ]
+    },
+    unit5: {
+        previousUnit: "unit4",
+        nextUnit: "unit1",
+        description: "파생33221상품",
         chapters: [
             {name: "선물", segment: "future"},
             {name: "옵션", segment: "option"},
