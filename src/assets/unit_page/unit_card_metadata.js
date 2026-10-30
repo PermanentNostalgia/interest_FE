@@ -2,12 +2,12 @@ const unitPageMetadata = {
     unit1: {
         previousUnit: "unit5",
         nextUnit: "unit2",
-        description: "주식 기초",
+        title: "Unit 1",
         chapters: [
-            {name: "거시경제 기본 용어", segment: "interest"},
-            {name: "주식이란?", segment: "share_basic"},
-            {name: "배당", segment: "dividend"},
-            {name: "재무제표", segment: "financial_statements"},
+            {name: "금리", segment: "interest"},
+            {name: "채권", segment: "bond"},
+            {name: "주식", segment: "share"},
+            {name: "배당", segment: "divided"},
         ]
     },
     unit2: {

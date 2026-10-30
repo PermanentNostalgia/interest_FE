@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router"
 import { createRoot } from "react-dom/client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import UnitCardRoulette from "../components/unit_page/UnitCardRoulette"
 import unitCardMetadata from "../assets/unit_page/unit_card_metadata.js"
@@ -16,8 +16,8 @@ export default function UnitPage() {
     }
 
     return(
-        <>
-            <UnitCardRoulette/>
-        </>
+        <div className={style.unit_page}>
+            <UnitCardRoulette unitCardMetadata={currentUnitCardMetadata}/>
+        </div>
     );
 }
