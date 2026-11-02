@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import loginLogo from "../../assets/login-logo.png";
 import "./login.css";
-
-const patternTiles = Array.from({ length: 105 }, (_, index) => (
-  <span className="login-pattern-tile" key={index} />
-));
 
 const KAKAO_STATE_KEY = "kakao_oauth_state";
 
@@ -15,31 +10,6 @@ function getRedirectUri() {
 function getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint) {
   if (kakaoLoginEndpoint) return kakaoLoginEndpoint;
   return `${apiBaseUrl.replace(/\/+$/, "")}/api/auth/kakao`;
-}
-
-function StatusIcons() {
-  return (
-    <span className="login-status-icons" aria-hidden="true">
-      <svg viewBox="0 0 18 12">
-        <path d="M1 11V8h3v3M6 11V6h3v5m2 0V3h3v8m2 0V1h3v10" />
-      </svg>
-      <svg viewBox="0 0 17 13">
-        <path d="M1 4.5C5.3.8 11.7.8 16 4.5L8.5 12 1 4.5Z" />
-      </svg>
-      <svg className="login-battery" viewBox="0 0 28 14">
-        <rect x=".75" y=".75" width="24" height="12.5" rx="3.5" />
-        <path d="M26.5 4.5v5" />
-        <rect
-          className="login-battery-fill"
-          x="3"
-          y="3"
-          width="19"
-          height="8"
-          rx="2"
-        />
-      </svg>
-    </span>
-  );
 }
 
 function KakaoIcon() {
@@ -54,26 +24,31 @@ function KakaoIcon() {
   );
 }
 
-function LoginLogo() {
-  return (
-    <img
-      className="login-logo"
-      src={loginLogo}
-      aria-label="금리도 모르면서 로고"
-      alt="금리도 모르면서 로고"
-    />
-  );
-}
-
 export default function Login({
   kakaoRestApiKey = "1304ac232764438b146d93b3f07f9624",
   apiBaseUrl = "",
   kakaoLoginEndpoint = import.meta.env.VITE_KAKAO_LOGIN_ENDPOINT,
   onLoginSuccess,
+  onSkipTutorial,
 }) {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(() => {
+    const callbackUrl = new URL(window.location.href);
+    if (callbackUrl.searchParams.has("error")) {
+      return (
+        callbackUrl.searchParams.get("error_description") ||
+        "카카오 로그인을 취소했거나 인증에 실패했습니다."
+      );
+    }
+    return "";
+  });
   const [statusMessage, setStatusMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(() => {
+    const callbackUrl = new URL(window.location.href);
+    return (
+      callbackUrl.searchParams.has("code") &&
+      !callbackUrl.searchParams.has("error")
+    );
+  });
   const callbackStarted = useRef(false);
 
   useEffect(() => {
@@ -83,10 +58,6 @@ export default function Login({
     const receivedState = callbackUrl.searchParams.get("state");
 
     if (kakaoError) {
-      setErrorMessage(
-        callbackUrl.searchParams.get("error_description") ||
-          "카카오 로그인을 취소했거나 인증에 실패했습니다.",
-      );
       callbackUrl.searchParams.delete("error");
       callbackUrl.searchParams.delete("error_description");
       callbackUrl.searchParams.delete("state");
@@ -96,36 +67,35 @@ export default function Login({
 
     if (!authorizationCode || callbackStarted.current) return;
     callbackStarted.current = true;
-    setIsLoading(true);
-    setErrorMessage("");
     callbackUrl.searchParams.delete("code");
     callbackUrl.searchParams.delete("state");
     window.history.replaceState({}, "", callbackUrl);
 
-    let expectedState;
-    try {
-      expectedState = window.sessionStorage.getItem(KAKAO_STATE_KEY);
-      window.sessionStorage.removeItem(KAKAO_STATE_KEY);
-    } catch {
-      setErrorMessage("브라우저에서 로그인 세션을 확인할 수 없습니다.");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!expectedState || receivedState !== expectedState) {
-      setErrorMessage("로그인 요청을 확인할 수 없습니다. 다시 시도해 주세요.");
-      setIsLoading(false);
-      return;
-    }
-
     const redirectUri = getRedirectUri();
 
-    fetch(getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint), {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: authorizationCode, redirectUri }),
-    })
+    Promise.resolve()
+      .then(() => {
+        let expectedState;
+        try {
+          expectedState = window.sessionStorage.getItem(KAKAO_STATE_KEY);
+          window.sessionStorage.removeItem(KAKAO_STATE_KEY);
+        } catch {
+          throw new Error("브라우저에서 로그인 세션을 확인할 수 없습니다.");
+        }
+
+        if (!expectedState || receivedState !== expectedState) {
+          throw new Error(
+            "로그인 요청을 확인할 수 없습니다. 다시 시도해 주세요.",
+          );
+        }
+
+        return fetch(getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint), {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: authorizationCode, redirectUri }),
+        });
+      })
       .then(async (response) => {
         const responseText = await response.text();
         let responseBody = {};
@@ -149,7 +119,11 @@ export default function Login({
       })
       .then((responseBody) => {
         setStatusMessage("로그인되었습니다.");
-        if (onLoginSuccess) onLoginSuccess(responseBody?.user);
+        if (onLoginSuccess) {
+          onLoginSuccess(
+            responseBody?.user ?? responseBody?.data?.user ?? responseBody,
+          );
+        }
       })
       .catch((error) => {
         setErrorMessage(
@@ -203,17 +177,7 @@ export default function Login({
 
   return (
     <main className="login-screen">
-      <div className="login-background" aria-hidden="true">
-        <div className="login-pattern">{patternTiles}</div>
-      </div>
-
-      <div className="login-status" aria-label="상태 표시줄">
-        <span className="login-time">9:41</span>
-        <StatusIcons />
-      </div>
-
       <div className="login-brand">
-        <LoginLogo />
         <h1 className="login-title">
           금리도
           <br />
@@ -235,6 +199,13 @@ export default function Login({
             {isLoading ? "로그인 처리 중..." : "카카오계정으로 로그인"}
           </span>
         </button>
+        <button
+          className="login-skip"
+          type="button"
+          onClick={onSkipTutorial}
+        >
+          이미 가입했어요 (튜토리얼 건너뛰기)
+        </button>
         {errorMessage && (
           <p className="login-feedback login-feedback--error" role="alert">
             {errorMessage}
@@ -246,8 +217,6 @@ export default function Login({
           </p>
         )}
       </section>
-
-      <div className="login-home-indicator" aria-hidden="true" />
     </main>
   );
 }

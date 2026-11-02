@@ -1,185 +1,161 @@
-* {
+
+.login-screen,
+.login-screen *,
+.login-screen *::before,
+.login-screen *::after {
   box-sizing: border-box;
 }
 
 .login-screen {
   position: relative;
-  width: min(100%, 393px);
-  height: min(100svh, 852px);
-  min-height: 600px;
+  width: min(100%, 393px, calc(100dvh * 393 / 852));
+  aspect-ratio: 393 / 852;
+  container-type: inline-size;
   margin: 0 auto;
   overflow: hidden;
   background: #fff;
   color: #000;
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  font-family:
+    Pretendard,
+    "Apple SD Gothic Neo",
+    "Noto Sans CJK KR",
+    "Malgun Gothic",
+    sans-serif;
+
   -webkit-font-smoothing: antialiased;
 }
 
-.login-background {
+/* 원본 디자인 배경 */
+
+.login-screen::before,
+.login-screen::after {
+  content: "";
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 270px 310px at -18% -4%, #0114e9 0%, #3b72ff 38%, transparent 78%),
-    radial-gradient(ellipse 205px 280px at 0% 4%, #a7c0ff 0%, #dee8ff 45%, transparent 77%),
-    radial-gradient(ellipse 280px 370px at 106% 107%, #0114e9 0%, #3b72ff 42%, transparent 78%),
-    radial-gradient(ellipse 210px 290px at 100% 98%, #a7c0ff 0%, #dee8ff 47%, transparent 78%),
-    #fff;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
-.login-pattern {
-  position: absolute;
-  inset: -14px -14px;
-  display: grid;
-  grid-template-columns: repeat(8, 58.9px);
-  grid-auto-rows: 58.9px;
-  justify-content: center;
-  align-content: space-between;
-  transform: rotate(0.5deg);
-  -webkit-mask-image:
-    radial-gradient(ellipse 245px 250px at 0% 0%, #000 8%, transparent 100%),
-    radial-gradient(ellipse 255px 300px at 100% 100%, #000 5%, transparent 100%);
-  mask-image:
-    radial-gradient(ellipse 245px 250px at 0% 0%, #000 8%, transparent 100%),
-    radial-gradient(ellipse 255px 300px at 100% 100%, #000 5%, transparent 100%);
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
+.login-screen::before {
+  background-image: url("/login_intro_artwork.png");
 }
 
-.login-pattern-tile {
-  border: 1px solid rgb(255 255 255 / 35%);
-  border-radius: 5px;
-  background: rgb(255 255 255 / 20%);
-  box-shadow: inset 0 0 10px rgb(255 255 255 / 16%);
-}
-
-.login-status {
-  position: absolute;
+.login-screen::after {
+  background-image: url("/login_main_artwork.png");
   z-index: 1;
-  top: 15px;
-  left: 24px;
-  right: 27.6px;
-  display: flex;
-  height: 21px;
-  align-items: center;
-  justify-content: space-between;
+  animation: login-art-switch 400ms 4.8s both;
 }
 
-.login-time {
-  width: 54px;
-  font-family: "SF Pro Text", -apple-system, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 21px;
-  letter-spacing: -0.32px;
-  text-align: center;
-    display: none;
+@keyframes login-art-switch {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.login-status-icons {
-  display: flex;
-  width: 77.4px;
-  height: 14px;
-  align-items: center;
-  justify-content: space-between;
+/* 이미지에 포함된 요소의 중복 표시 방지 */
+
+.login-background,
+.login-intro-logo,
+.login-logo,
+.login-statusbar,
+.login-home-indicator {
+  display: none;
 }
 
-.login-status-icons svg {
-  display: block;
-  width: 18px;
-  height: 13px;
-  fill: #000;
-    display: none;
-}
-
-.login-status-icons .login-battery {
-  width: 28px;
-  height: 14px;
-  fill: none;
-  stroke: rgb(0 0 0 / 40%);
-  stroke-width: 1.5px;
-    display: none;
-  
-}
-
-.login-status-icons .login-battery-fill {
-  fill: #000;
-  stroke: none;
-    display: none;
-}
+/* 제목은 화면에는 이미지로 표시,
+   DOM에는 접근성용 텍스트로 유지 */
 
 .login-brand {
   position: absolute;
-  z-index: 1;
-  top: 145px;
-  left: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 57px;
-}
-
-.login-logo {
-  display: block;
-  margin-left: 2px;
-  width: 52.34px;
-  height: auto;
-}
-
-.login-title {
-  width: 345px;
-  height: 152px;
-  margin: 0;
-  color: #000;
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 76px;
-  letter-spacing: -2px;
-}
-
-.login-actions {
-  position: absolute;
-  z-index: 1;
-  bottom: 37px;
-  right: 24px;
-  left: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.login-signup {
-  width: 176px;
-  height: 17px;
-  margin: 0;
-  color: #969696;
-  font-family: Inter, Pretendard, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 
-.login-kakao {
+/* 로그인 버튼 영역 */
+
+.login-actions {
+  position: absolute;
+  z-index: 2;
+
+  left: 6.11cqw;
+  right: 6.11cqw;
+  bottom: 8.12%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.53cqw;
+
+  animation: login-actions-enter 500ms 5s both;
+}
+
+@keyframes login-actions-enter {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(3.05cqw);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* SNS 안내 */
+
+.login-signup {
+  width: auto;
+  height: 4.33cqw;
+  line-height: 4.33cqw;
+  margin: 0;
+  color: #fff;
+
+  font-size: 3.56cqw;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* 버튼 공통 */
+
+.login-kakao,
+.login-skip {
   display: flex;
   width: 100%;
-  height: 45px;
+  height: 11.7cqw;
   flex: none;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: 24.5px;
-  background: #fee500;
-  color: #191600;
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  font-size: 14px;
+
+  border-radius: 6.11cqw;
+  font-family: inherit;
+  font-size: 3.56cqw;
   font-weight: 500;
   cursor: pointer;
+
   -webkit-tap-highlight-color: transparent;
+}
+
+/* 카카오 로그인 */
+
+.login-kakao {
+  gap: 2.04cqw;
+  padding: 0 4.07cqw;
+  border: 0;
+  background: #f4e64f;
+  color: #191600;
 }
 
 .login-kakao:disabled {
@@ -187,12 +163,48 @@
   opacity: 0.7;
 }
 
+.login-kakao-icon {
+  display: block;
+  width: 4.58cqw;
+  height: 4.33cqw;
+  flex: none;
+  fill: currentColor;
+}
+
+/* 튜토리얼 건너뛰기 */
+
+.login-skip {
+  margin-top: 1.53cqw;
+  padding: 0 3cqw;
+
+  border: 1px solid rgb(255 255 255 / 78%);
+  background: rgb(245 247 255 / 17%);
+
+  box-shadow:
+    0 0.5cqw 2.04cqw rgb(0 0 0 / 18%),
+    inset 0 1px 1px rgb(255 255 255 / 75%);
+
+  color: #fff;
+  white-space: nowrap;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.login-skip:focus-visible,
+.login-kakao:focus-visible {
+  outline: 3px solid #3b72ff;
+  outline-offset: 3px;
+}
+
+/* 로그인 피드백 */
+
 .login-feedback {
   max-width: 100%;
-  margin: 2px 0 0;
+  margin: 0.51cqw 0 0;
   color: #24314a;
-  font-size: 12px;
-  line-height: 17px;
+  font-size: 3.05cqw;
+  line-height: 4.33cqw;
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -201,29 +213,12 @@
   color: #c62828;
 }
 
-.login-kakao-icon {
-  display: block;
-  width: 18px;
-  height: 17px;
-  flex: none;
-  fill: currentColor;
-}
+/* 애니메이션 최소화 */
 
-.login-home-indicator {
-  position: absolute;
-  z-index: 1;
-  bottom: 8px;
-  left: 50%;
-  width: 134px;
-  height: 5px;
-  transform: translateX(-50%);
-  border-radius: 100px;
-  background: #000;
-}
-
-@media (max-height: 700px) {
-  .login-screen {
-    min-height: 0;
+@media (prefers-reduced-motion: reduce) {
+  .login-screen::after,
+  .login-actions {
+    animation-delay: 0s;
+    animation-duration: 1ms;
   }
-
 }
