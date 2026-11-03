@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 
 import learnPageMetadata from "../assets/learn_page/learn_page_metadata.js";
 import BottomTab from "../components/learn_page/BottomTab";
+import InterestSimulation from "../components/learn_page/InterestSimulation";
 import "./LearnPage.css";
 
 export default function LearnPage() {
@@ -10,7 +11,7 @@ export default function LearnPage() {
   const chapter = learnPageMetadata[chapterName];
 
   const [stepIndex, setStepIndex] = useState(0);
-  const [phase, setPhase] = useState("question");
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   if (!chapter) {
@@ -19,26 +20,48 @@ export default function LearnPage() {
 
   const step = chapter.steps[stepIndex];
   const totalSteps = chapter.steps.length;
-  const isAnswered = selectedIndex !== null;
+  const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === totalSteps - 1;
+
+  const question = step.type === "quiz" ? step.questions[questionIndex] : null;
+  const isLastQuestion =
+    step.type === "quiz" && questionIndex === step.questions.length - 1;
+  const isAnswered = selectedIndex !== null;
+
+  const goToStep = (index) => {
+    setStepIndex(index);
+    setQuestionIndex(0);
+    setSelectedIndex(null);
+  };
+
+  const handleNext = () => {
+    if (step.type === "quiz" && !isLastQuestion) {
+      setQuestionIndex(questionIndex + 1);
+      setSelectedIndex(null);
+      return;
+    }
+    goToStep(stepIndex + 1);
+  };
 
   const handleSelect = (index) => {
     if (isAnswered) return;
     setSelectedIndex(index);
   };
 
-  const handleNext = () => {
-    setStepIndex(stepIndex + 1);
-    setSelectedIndex(null);
-    setPhase("question");
-  };
-
   const getOptionClass = (index) => {
     let className = "learn-option";
     if (!isAnswered) return className;
-    if (index === step.answerIndex) className += " correct";
+    if (index === question.answerIndex) className += " correct";
     else if (index === selectedIndex) className += " wrong";
     return className;
+  };
+
+  const renderNextButton = () => {
+    const isFinal = isLastStep && (step.type !== "quiz" || isLastQuestion);
+    if (isFinal) {
+      return <Link to={`/units/${chapter.unit}`}>학습 완료</Link>;
+    }
+    return <button onClick={handleNext}>다음</button>;
   };
 
   return (
@@ -53,15 +76,17 @@ export default function LearnPage() {
         학습 {stepIndex + 1}/{totalSteps}
       </p>
       <h1 className="learn-title">{chapter.title}</h1>
+      <p className="learn-guide">
+        {step.type === "quiz" ? "답을 골라주세요" : step.label}
+      </p>
 
-      {phase === "question" ? (
+      {step.type === "quiz" ? (
         <>
-          <p className="learn-guide">답을 골라주세요</p>
           <div className={"learn-card" + (isAnswered ? " dimmed" : "")}>
-            {step.question}
+            Q{questionIndex + 1}. {question.question}
           </div>
 
-          {step.options.map((option, index) => (
+          {question.options.map((option, index) => (
             <button
               key={index}
               className={getOptionClass(index)}
@@ -71,33 +96,32 @@ export default function LearnPage() {
             </button>
           ))}
 
-          <div className="learn-action">
-            {isAnswered && (
-              <button onClick={() => setPhase("explain")}>해설 보기</button>
-            )}
-          </div>
+          <div className="learn-action">{isAnswered && renderNextButton()}</div>
 
           <BottomTab active="배우기" />
         </>
       ) : (
         <>
-          <div className="learn-card large">
-            {step.explanation.map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-          </div>
+          {step.type === "explain" ? (
+            <div className="learn-card large">
+              {step.lines.map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+          ) : (
+            <InterestSimulation />
+          )}
 
-          <div className="learn-action">
-            {isLastStep ? (
-              <Link to={`/units/${chapter.unit}`}>학습 완료</Link>
-            ) : (
-              <button onClick={handleNext}>다음 문제</button>
-            )}
-          </div>
+          <div className="learn-action">{renderNextButton()}</div>
 
-          <button className="learn-back" onClick={() => setPhase("question")}>
-            ‹
-          </button>
+          {!isFirstStep && (
+            <button
+              className="learn-back"
+              onClick={() => goToStep(stepIndex - 1)}
+            >
+              ‹
+            </button>
+          )}
         </>
       )}
     </div>
