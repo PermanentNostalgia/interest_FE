@@ -2,20 +2,22 @@ import { useState, useEffect } from "react"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, className, metadata, locked, chapterProgress}) {
+export default function UnitCard({scrollPosition, metadata, locked, chapterProgress}) {
     const [chapters, setChapters] = useState([]);
     useEffect(()=>{
-        let chaptersList = metadata.chapters.map((chapter, index) => (
-            <p key={chapter.segment} className={`${style.chapter_title} ${(index<chapterProgress) ? style.highlight : ""}`}
-            style={{
-                top: `${105+index*28}rem`
-            }}>{chapter.name}</p> 
-        ));
-        setChapters(chaptersList);
+        if(!locked) {
+            let chaptersList = metadata.chapters.map((chapter, index) => (
+                <p key={chapter.segment} className={`${style.chapter_title} ${(index<chapterProgress) ? style.highlight : ""}`}
+                style={{
+                    top: `${105+index*28}rem`
+                }}>{chapter.name}</p> 
+            ));
+            setChapters(chaptersList);
+        }
     },[]);
 
     return (
-    <div className={className} style={
+    <div className={`${style.unit_card} ${locked ? style.locked : style.unlocked}`} style={
         {transform: `translate(${scrollPosition}rem, 0rem)`,
         background: `radial-gradient(50% 50% at 50% 50%, ${metadata.innerColor} 0%, ${metadata.outterColor} 100%)`
         }}>
