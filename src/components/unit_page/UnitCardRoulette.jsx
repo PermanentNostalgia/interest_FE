@@ -8,9 +8,10 @@ import style from "../../styles/unit_page.module.css"
 
 export default function UnitCardRoulette({unitName}) {
     const [scrollPosition, setScrollPosition] = useState(0);
+    const [scrollPositionMin, setScrollPositionMin] = useState(Number.MIN_SAFE_INTEGER);
+    const [scrollPositionMax, setScrollPositionMax] = useState(Number.MAX_SAFE_INTEGER);
     const [mousePositionX, setMousePositionX] = useState(undefined);
     const [dragging, setDragging] = useState(false);
-    const [isUnitCardReturning, setIsUnitCardReturning] = useState(false);
 
     const [orderedUnitCardMetadata, setOrderedUnitCardMetadata] = useState({});
 
@@ -32,23 +33,25 @@ export default function UnitCardRoulette({unitName}) {
             }
         }
 
+        setScrollPositionMin(-rightMetadata.length*280);
+        setScrollPositionMax(leftMetadata.length*280);
         setOrderedUnitCardMetadata({middle: middleMetadata, left: leftMetadata, right: rightMetadata});
     },[]);
 
     const handleRotationStart = useCallback(e => {
-        if(isUnitCardReturning) return;
-
         e.stopPropagation();
 
         if(e.type=="touchstart") {
             setMousePositionX(e.touches[0].screenX);
+            console.log(`Attached: ${e.touches[0].screenX}`);
         } else {
             e.preventDefault();
             setMousePositionX(e.screenX);
+            console.log(`Attached: ${e.screenX}`);
         }
 
         setDragging(true);
-    }, [isUnitCardReturning]);
+    }, []);
 
     const handleRotation = useCallback(e => {
         if(!dragging) return;
@@ -62,9 +65,13 @@ export default function UnitCardRoulette({unitName}) {
             newMousePositionX = e.screenX;
         }
 
-        setScrollPosition(scrollPosition + (newMousePositionX -mousePositionX));
+        let newScrollPosition = scrollPosition + (newMousePositionX - mousePositionX);
+        if(newScrollPosition>=scrollPositionMin && newScrollPosition<=scrollPositionMax) {
+            setScrollPosition(newScrollPosition);
+        }
+
         setMousePositionX(newMousePositionX);
-    }, [dragging, scrollPosition, mousePositionX]);
+    }, [dragging, scrollPosition, mousePositionX, scrollPositionMin, scrollPositionMax]);
 
     const handleRotationEnd = useCallback(e => {
         if(!dragging) return;
@@ -102,7 +109,8 @@ export default function UnitCardRoulette({unitName}) {
         <div onTouchStart={handleRotationStart}
             onTouchMove={handleRotation} onTouchEnd={handleRotationEnd}
             onMouseDown={handleRotationStart} onMouseMove={handleRotation}
-            onMouseUp={handleRotationEnd} className={style.unit_card_roulette}
+            onMouseUp={handleRotationEnd} onMouseLeave={handleRotationEnd}
+            className={style.unit_card_roulette}
             style={{overflow: "hidden"}}>
                 {unitCards}
         </div>
