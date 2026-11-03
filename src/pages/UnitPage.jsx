@@ -17,6 +17,15 @@ export default function UnitPage() {
 
     return(
         <div className={style.unit_page}>
+            <p className={`${style.unit_page_slogan} ${style.hello1}`}>
+                안녕하세요, Test1님!
+            </p>
+            <p className={`${style.unit_page_slogan} ${style.hello2}`}>
+                오늘은 뭘 배워볼까요?
+            </p>
+            <p className={`${style.unit_page_slogan} ${style.hello3}`}>
+                금융 용어 외우기
+            </p>
             <UnitCardRoulette unitCardMetadata={currentUnitCardMetadata}/>
         </div>
     );

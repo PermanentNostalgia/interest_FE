@@ -2,12 +2,15 @@ const unitPageMetadata = {
     unit1: {
         previousUnit: "unit5",
         nextUnit: "unit2",
-        title: "Unit 1",
+        title: "UNIT 1",
+        innerColor: "#FFE600",
+        outterColor: "#27DFFF",
         chapters: [
             {name: "금리", segment: "interest"},
             {name: "채권", segment: "bond"},
-            {name: "주식", segment: "share"},
-            {name: "배당", segment: "divided"},
+            {name: "서킷브레이커", segment: "circuit-breaker"},
+            {name: "시가총액", segment: "market-cap"},
+            {name: "어닝콜", segment: "earning-call"}
         ]
     },
     unit2: {

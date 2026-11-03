@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react"
+import { useState, useCallback } from "react"
+
+import UnitCard from "./UnitCard"
 
 import style from "../../styles/unit_page.module.css"
 
 export default function UnitCardRoulette({unitCardMetadata}) {
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [currentUnitCard, setCurrentUnitCard] = useState(unitCardMetadata.title);
+    const [currentUnitCardMetadata, setCurrentUnitCardMetadata] = useState(unitCardMetadata);
     const [mousePositionX, setMousePositionX] = useState(undefined);
     const [dragging, setDragging] = useState(false);
     const [isUnitCardReturning, setIsUnitCardReturning] = useState(false);
 
-    function handleRotationStart(e) {
+    const handleRotationStart = useCallback(e => {
         if(isUnitCardReturning) return;
 
         e.stopPropagation();
@@ -22,9 +24,9 @@ export default function UnitCardRoulette({unitCardMetadata}) {
         }
 
         setDragging(true);
-    }
+    }, [isUnitCardReturning]);
 
-    function handleRotation(e) {
+    const handleRotation = useCallback(e => {
         if(!dragging) return;
 
         e.stopPropagation();
@@ -36,17 +38,17 @@ export default function UnitCardRoulette({unitCardMetadata}) {
             newMousePositionX = e.screenX;
         }
 
-        setScrollPosition(scrollPosition + (newMousePositionX -mousePositionX)*3);
+        setScrollPosition(scrollPosition + (newMousePositionX -mousePositionX));
         setMousePositionX(newMousePositionX);
-    }
+    }, [dragging, scrollPosition, mousePositionX]);
 
-    function handleRotationEnd(e) {
+    const handleRotationEnd = useCallback(e => {
         if(!dragging) return;
         
         e.stopPropagation();
 
         setDragging(false);
-    }
+    }, [dragging]);
 
     return (
         <div onTouchStart={handleRotationStart}
@@ -54,18 +56,7 @@ export default function UnitCardRoulette({unitCardMetadata}) {
             onMouseDown={handleRotationStart} onMouseMove={handleRotation}
             onMouseUp={handleRotationEnd} className={style.unit_card_roulette}
             style={{overflow: "hidden"}}>
-            <div className={`${style.unit_card} ${style.left}`}
-            style={{
-                transform: `translate(${scrollPosition}px, 0px)`
-            }}></div>
-            <div className={`${style.unit_card} ${style.right}`}
-            style={{
-                transform: `translate(${scrollPosition}px, 0px)`
-            }}></div>
-            <div className={style.unit_card} style={{
-                
-                transform: `translate(${scrollPosition}px, 0px)`
-            }}></div>
+                <UnitCard className={style.unit_card} scrollPosition={scrollPosition} metadata={unitCardMetadata} locked={false} chapterProgress={3}/>
         </div>
     );
 }
