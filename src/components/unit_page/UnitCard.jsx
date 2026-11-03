@@ -32,7 +32,9 @@ export default function UnitCard({scrollPosition, className, metadata, locked, c
                     width: `${100/metadata.chapters.length*chapterProgress}%`
                 }}></div>
             </div>
-            <button className={style.unit_card_button}>배우러 가기</button>
+            <button className={style.unit_card_button}>
+                {(chapterProgress==0) ? "1분만에 배우기" : (chapterProgress==metadata.chapters.length) ? "복습하기" : "\u2B6E 이어서 학습하기"}
+            </button>
             </>)
         }
     </div>);

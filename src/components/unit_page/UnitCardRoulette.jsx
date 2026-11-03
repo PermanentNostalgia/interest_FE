@@ -56,7 +56,7 @@ export default function UnitCardRoulette({unitCardMetadata}) {
             onMouseDown={handleRotationStart} onMouseMove={handleRotation}
             onMouseUp={handleRotationEnd} className={style.unit_card_roulette}
             style={{overflow: "hidden"}}>
-                <UnitCard className={style.unit_card} scrollPosition={scrollPosition} metadata={unitCardMetadata} locked={false} chapterProgress={3}/>
+                <UnitCard className={style.unit_card} scrollPosition={scrollPosition} metadata={unitCardMetadata} locked={false} chapterProgress={5}/>
         </div>
     );
 }
