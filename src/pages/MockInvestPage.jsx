@@ -43,7 +43,7 @@ export default function MockInvestPage() {
   } else {
     content = (
       <>
-        <p className="mock-part">B Part · 모의투자</p>
+        <p className="mock-part">B Part 모의투자</p>
         <h1 className="mock-title">어떤 종목으로 시작할까요?</h1>
         {scenarioMetadata.map((scenario) => (
           <ScenarioCard

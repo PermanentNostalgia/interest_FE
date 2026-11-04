@@ -11,7 +11,7 @@ export default function TradeResult({ scenario, result, onRetry }) {
   return (
     <>
       <p className="mock-subtitle">
-        {scenario.stockName} · {finalDay}일차 · 거래 결과
+        {scenario.stockName} · {finalDay}일차 / 거래 결과
       </p>
 
       <div className="mock-card">
