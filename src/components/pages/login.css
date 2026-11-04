@@ -1,0 +1,224 @@
+
+.login-screen,
+.login-screen *,
+.login-screen *::before,
+.login-screen *::after {
+  box-sizing: border-box;
+}
+
+.login-screen {
+  position: relative;
+  width: min(100%, 393px, calc(100dvh * 393 / 852));
+  aspect-ratio: 393 / 852;
+  container-type: inline-size;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+
+  font-family:
+    Pretendard,
+    "Apple SD Gothic Neo",
+    "Noto Sans CJK KR",
+    "Malgun Gothic",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 원본 디자인 배경 */
+
+.login-screen::before,
+.login-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.login-screen::before {
+  background-image: url("../../assets/login_intro_artwork.png");
+}
+
+.login-screen::after {
+  background-image: url("../../assets/login_main_artwork.png");
+  z-index: 1;
+  animation: login-art-switch 600ms 600ms both;
+}
+
+@keyframes login-art-switch {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* 이미지에 포함된 요소의 중복 표시 방지 */
+
+.login-background,
+.login-intro-logo,
+.login-logo,
+.login-statusbar,
+.login-home-indicator {
+  display: none;
+}
+
+/* 제목은 화면에는 이미지로 표시,
+   DOM에는 접근성용 텍스트로 유지 */
+
+.login-brand {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 로그인 버튼 영역 */
+
+.login-actions {
+  position: absolute;
+  z-index: 2;
+
+  left: 6.11cqw;
+  right: 6.11cqw;
+  bottom: 8.12%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.53cqw;
+
+  animation: login-actions-enter 1.2s 1.2s both;
+}
+
+@keyframes login-actions-enter {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(3.05cqw);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* SNS 안내 */
+
+.login-signup {
+  width: auto;
+  height: 4.33cqw;
+  line-height: 4.33cqw;
+  margin: 0;
+  color: #fff;
+
+  font-size: 3.56cqw;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* 버튼 공통 */
+
+.login-kakao,
+.login-skip {
+  display: flex;
+  width: 100%;
+  height: 11.7cqw;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6.11cqw;
+  font-family: inherit;
+  font-size: 3.56cqw;
+  font-weight: 500;
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 카카오 로그인 */
+
+.login-kakao {
+  gap: 2.04cqw;
+  padding: 0 4.07cqw;
+  border: 0;
+  background: #f4e64f;
+  color: #191600;
+}
+
+.login-kakao:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.login-kakao-icon {
+  display: block;
+  width: 4.58cqw;
+  height: 4.33cqw;
+  flex: none;
+  fill: currentColor;
+}
+
+/* 튜토리얼 건너뛰기 */
+
+.login-skip {
+  margin-top: 1.53cqw;
+  padding: 0 3cqw;
+
+  border: 1px solid rgb(255 255 255 / 78%);
+  background: rgb(245 247 255 / 17%);
+
+  box-shadow:
+    0 0.5cqw 2.04cqw rgb(0 0 0 / 18%),
+    inset 0 1px 1px rgb(255 255 255 / 75%);
+
+  color: #fff;
+  white-space: nowrap;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.login-skip:focus-visible,
+.login-kakao:focus-visible {
+  outline: 3px solid #3b72ff;
+  outline-offset: 3px;
+}
+
+/* 로그인 피드백 */
+
+.login-feedback {
+  max-width: 100%;
+  margin: 0.51cqw 0 0;
+  color: #24314a;
+  font-size: 3.05cqw;
+  line-height: 4.33cqw;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.login-feedback--error {
+  color: #c62828;
+}
+
+/* 애니메이션 최소화 */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-screen::after,
+  .login-actions {
+    animation-delay: 0s;
+    animation-duration: 1ms;
+  }
+}
