@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router";
 import "./BottomTab.css";
 
 const tabs = [
-  { label: "홈", to: "/", match: (path) => path === "/" },
   {
     label: "배우기",
     to: "/units/unit1",

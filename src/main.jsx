@@ -7,6 +7,7 @@ import Login from "./components/pages/login"
 import UnitPage from "./pages/UnitPage"
 import MockInvestPage from "./pages/MockInvestPage"
 import LearnPage from "./pages/LearnPage"
+import "./styles/global.css"
 
 function LoginRoute() {
     const navigate = useNavigate();

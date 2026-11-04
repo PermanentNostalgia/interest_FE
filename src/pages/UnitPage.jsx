@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import { useState, useEffect } from "react"
 
 import UnitCardRoulette from "../components/unit_page/UnitCardRoulette"
+import BottomTab from "../components/common/BottomTab"
 
 import unitCardMetadata from "../assets/unit_page/unit_card_metadata.js"
 import style from "../styles/unit_page.module.css"
@@ -22,6 +23,7 @@ export default function UnitPage() {
                 금융 용어 외우기
             </p>
             <UnitCardRoulette unitName={unitName}/>
+            <BottomTab />
         </div>
     );
 }

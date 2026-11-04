@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 
 import style from "../../styles/unit_page.module.css"
 
 export default function UnitCard({scrollPosition, metadata, locked, chapterProgress}) {
+    const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
     useEffect(()=>{
         if(!locked) {
@@ -15,6 +17,12 @@ export default function UnitCard({scrollPosition, metadata, locked, chapterProgr
             setChapters(chaptersList);
         }
     },[]);
+
+    const handleStart = () => {
+        const targetIndex =
+            chapterProgress >= metadata.chapters.length ? 0 : chapterProgress;
+        navigate(`/learn/${metadata.chapters[targetIndex].segment}`);
+    };
 
     return (
     <div className={`${style.unit_card} ${locked ? style.locked : style.unlocked}`} style={
@@ -34,7 +42,7 @@ export default function UnitCard({scrollPosition, metadata, locked, chapterProgr
                     width: `${100/metadata.chapters.length*chapterProgress}%`
                 }}></div>
             </div>
-            <button className={style.unit_card_button}>
+            <button className={style.unit_card_button} onClick={handleStart}>
                 {(chapterProgress==0) ? "1분만에 배우기" : (chapterProgress==metadata.chapters.length) ? "복습하기" : "\u2B6E 이어서 학습하기"}
             </button>
             </>)
