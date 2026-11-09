@@ -2,14 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import "./login.css";
 
 const KAKAO_STATE_KEY = "kakao_oauth_state";
+const KAKAO_LOGIN_ENDPOINT = "/api/auth/kakao/login";
 
 function getRedirectUri() {
   return `${window.location.origin}${window.location.pathname}`;
-}
-
-function getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint) {
-  if (kakaoLoginEndpoint) return kakaoLoginEndpoint;
-  return `${apiBaseUrl.replace(/\/+$/, "")}/api/auth/kakao`;
 }
 
 function KakaoIcon() {
@@ -26,8 +22,6 @@ function KakaoIcon() {
 
 export default function Login({
   kakaoRestApiKey = "1304ac232764438b146d93b3f07f9624",
-  apiBaseUrl = "",
-  kakaoLoginEndpoint = import.meta.env.VITE_KAKAO_LOGIN_ENDPOINT,
   onLoginSuccess,
   onSkipTutorial,
 }) {
@@ -89,7 +83,7 @@ export default function Login({
           );
         }
 
-        return fetch(getKakaoLoginEndpoint(apiBaseUrl, kakaoLoginEndpoint), {
+        return fetch(KAKAO_LOGIN_ENDPOINT, {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -134,7 +128,7 @@ export default function Login({
         );
       })
       .finally(() => setIsLoading(false));
-  }, [apiBaseUrl, kakaoLoginEndpoint, onLoginSuccess]);
+  }, [onLoginSuccess]);
 
   function startKakaoLogin() {
     setErrorMessage("");
