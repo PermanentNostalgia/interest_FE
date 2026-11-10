@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import loginMark from "../../assets/login-mark.png";
 import "./login.css";
 
 const KAKAO_STATE_KEY = "kakao_oauth_state";
@@ -171,6 +172,90 @@ export default function Login({
 
   return (
     <main className="login-screen">
+      <svg
+        className="login-background"
+        viewBox="0 0 393 852"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter
+            id="login-background-noise"
+            x="0"
+            y="0"
+            width="393"
+            height="852"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB"
+          >
+            <feFlood floodOpacity="0" result="backgroundFix" />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="backgroundFix"
+              result="shape"
+            />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="2 2"
+              stitchTiles="stitch"
+              numOctaves="3"
+              result="noise"
+              seed="3530"
+            />
+            <feColorMatrix
+              in="noise"
+              type="luminanceToAlpha"
+              result="alphaNoise"
+            />
+            <feComponentTransfer in="alphaNoise" result="coloredNoise">
+              <feFuncA
+                type="discrete"
+                tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+              />
+            </feComponentTransfer>
+            <feComposite
+              operator="in"
+              in="coloredNoise"
+              in2="shape"
+              result="noiseClipped"
+            />
+            <feFlood
+              floodColor="rgba(0, 0, 0, 0.25)"
+              result="noiseColor"
+            />
+            <feComposite
+              operator="in"
+              in="noiseColor"
+              in2="noiseClipped"
+              result="coloredNoise"
+            />
+            <feMerge>
+              <feMergeNode in="shape" />
+              <feMergeNode in="coloredNoise" />
+            </feMerge>
+          </filter>
+          <linearGradient
+            id="login-background-gradient"
+            x1="196.5"
+            y1="0"
+            x2="196.5"
+            y2="852"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#27DFFF" />
+            <stop offset="1" stopColor="#FFE500" />
+          </linearGradient>
+        </defs>
+        <g filter="url(#login-background-noise)">
+          <rect
+            width="393"
+            height="852"
+            fill="url(#login-background-gradient)"
+          />
+        </g>
+      </svg>
+
       <div className="login-brand">
         <h1 className="login-title">
           금리도
@@ -178,6 +263,12 @@ export default function Login({
           모르면서
         </h1>
       </div>
+
+      <img
+        className="login-mark"
+        src={loginMark}
+        alt=""
+      />
 
       <section className="login-actions" aria-label="계정 로그인">
         <p className="login-signup">SNS 계정으로 간편 가입하기</p>
@@ -198,7 +289,7 @@ export default function Login({
           type="button"
           onClick={onSkipTutorial}
         >
-          <span>로그인 없이 둘러보기</span>
+          이미 가입했어요 (튜토리얼 건너뛰기)
         </button>
         {errorMessage && (
           <p className="login-feedback login-feedback--error" role="alert">
