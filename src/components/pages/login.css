@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Ria Sans";
+  src: url("../../assets/fonts/RiaSans-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 .login-screen {
   position: relative;
   width: min(100vw, calc(100svh * 393 / 852));
@@ -5,11 +13,13 @@
   margin: 0 auto;
   overflow: hidden;
   container-type: inline-size;
-  background: #27dfff;
+  background: linear-gradient(180deg, #27dfff 40.38%, #ffe97a 100%);
   color: #fff;
   font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
+  isolation: isolate;
 }
+
 
 .login-background {
   position: absolute;
@@ -24,9 +34,22 @@
 .login-brand {
   position: absolute;
   z-index: 1;
-  top: 86.5cqw;
+  top: 82cqw;
   left: 0;
   width: 100%;
+}
+
+.login-title {
+  margin: 0;
+  color: #fff;
+  font-family: "Ria Sans", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic",
+    sans-serif;
+  font-size: 10.18cqw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 13.23cqw;
+  letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .login-mark {
@@ -39,15 +62,6 @@
   height: auto;
   transform: translateX(-50%);
   animation: login-mark-hide 250ms ease 1.65s forwards;
-}
-
-.login-title {
-  margin: 0;
-  font-size: 10.18cqw;
-  font-weight: 700;
-  line-height: 13.23cqw;
-  letter-spacing: -0.02em;
-  text-align: center;
 }
 
 .login-actions {
@@ -94,8 +108,7 @@
   gap: 2.04cqw;
   background: #f4e64f;
   color: #000;
-  box-shadow:
-    0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
+  box-shadow: 0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
 }
 
 .login-kakao:disabled {
@@ -112,13 +125,12 @@
 
 .login-skip {
   margin-top: 3.05cqw;
-  background: #cdd05f;
-  box-shadow:
-    0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
   border: 0.5px solid rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 20%);
   color: #fff;
   font-size: 3.56cqw;
   font-weight: 500;
+  box-shadow: 0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
 }
 
 .login-kakao:focus-visible,
@@ -140,6 +152,8 @@
 .login-feedback--error {
   color: #8b0000;
 }
+
+
 
 @keyframes login-rise {
   to {
