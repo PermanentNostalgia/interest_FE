@@ -1,4 +1,5 @@
 import "./tuto.css";
+import GradientBackground from "./gradient-background.jsx";
 
 const introParts = [
   {
@@ -26,12 +27,7 @@ function IntroCard({ part, title, description }) {
 export default function Tuto({ onContinue }) {
   return (
     <main className="tuto-screen">
-      <div className="tuto-background" aria-hidden="true">
-        <span className="tuto-glow tuto-glow--one" />
-        <span className="tuto-glow tuto-glow--two" />
-        <span className="tuto-glow tuto-glow--three" />
-        <span className="tuto-glow tuto-glow--four" />
-      </div>
+      <GradientBackground />
 
       <header className="tuto-heading">
         <p>배우고, 써먹고</p>
@@ -52,9 +48,6 @@ export default function Tuto({ onContinue }) {
         시작해볼게요
       </button>
 
-      <div className="tuto-tabbar" aria-hidden="true">
-        <div className="tuto-home-indicator" />
-      </div>
     </main>
   );
 }
