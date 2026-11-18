@@ -116,7 +116,10 @@ export default function Login({
         setStatusMessage("로그인되었습니다.");
         if (onLoginSuccess) {
           onLoginSuccess(
-            responseBody?.user ?? responseBody?.data?.user ?? responseBody,
+            responseBody?.user ??
+              responseBody?.data?.user ??
+              responseBody?.data ??
+              responseBody,
           );
         }
       })
@@ -221,7 +224,7 @@ export default function Login({
               result="noiseClipped"
             />
             <feFlood
-              floodColor="rgba(0, 0, 0, 0.25)"
+              floodColor="rgba(0, 0, 0, 0.06)"
               result="noiseColor"
             />
             <feComposite
@@ -244,16 +247,16 @@ export default function Login({
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="#27DFFF" />
-            <stop offset="1" stopColor="#FFE500" />
+            <stop offset="0.4038" stopColor="#27DFFF" />
+            <stop offset="1" stopColor="#FFE97A" />
           </linearGradient>
         </defs>
-        <g filter="url(#login-background-noise)">
-          <rect
-            width="393"
-            height="852"
-            fill="url(#login-background-gradient)"
-          />
-        </g>
+        <rect
+          width="393"
+          height="852"
+          filter="url(#login-background-noise)"
+          fill="url(#login-background-gradient)"
+        />
       </svg>
 
       <div className="login-brand">
@@ -289,7 +292,7 @@ export default function Login({
           type="button"
           onClick={onSkipTutorial}
         >
-          이미 가입했어요 (튜토리얼 건너뛰기)
+          로그인 없이 둘러보기
         </button>
         {errorMessage && (
           <p className="login-feedback login-feedback--error" role="alert">
