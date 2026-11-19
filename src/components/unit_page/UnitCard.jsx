@@ -3,7 +3,7 @@ import { useNavigate } from "react-router"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, metadata, locked, chapterProgress}) {
+export default function UnitCard({scrollPosition, side, metadata, locked, chapterProgress}) {
     const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
     useEffect(()=>{
@@ -24,9 +24,28 @@ export default function UnitCard({scrollPosition, metadata, locked, chapterProgr
         navigate(`/learn/${metadata.chapters[targetIndex].segment}`);
     };
 
+    let rotationStartingPosition;
+    switch(side) {
+        case 0:
+            rotationStartingPosition = "0s";
+            break;
+        case 1:
+            rotationStartingPosition = `-${5/3}s`;
+            break;
+        case 2:
+            rotationStartingPosition = `-${10/3}s`;
+            break;
+        default:
+            return (<></>);
+    }
+
     return (
     <div className={`${style.unit_card} ${locked ? style.locked : style.unlocked}`} style={
-        {transform: `translate(${scrollPosition}rem, 0rem)`,
+        {animationName: `${style.unit_card_rotation}`,
+        animationDuration: `5s`,
+        animationDelay: rotationStartingPosition,
+        animationIterationCount: "infinite",
+        animationTimingFunction: "ease",
         background: `radial-gradient(50% 50% at 50% 50%, ${metadata.innerColor} 0%, ${metadata.outterColor} 100%)`
         }}>
         {   (locked) ?
