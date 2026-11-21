@@ -3,8 +3,13 @@
         font-size: 1px;
     }
 
-    body {
+    .unit_page {
+        position: relative;
+        width: 100%;
+        height: 100vh;
         overflow: hidden;
+
+        background-color: white;
     }
 }
 
