@@ -8,8 +8,6 @@ import style from "../../styles/unit_page.module.css"
 
 export default function UnitCardRoulette({unitName}) {
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [scrollPositionMin, setScrollPositionMin] = useState(Number.MIN_SAFE_INTEGER);
-    const [scrollPositionMax, setScrollPositionMax] = useState(Number.MAX_SAFE_INTEGER);
     const [mousePositionX, setMousePositionX] = useState(undefined);
     const [dragging, setDragging] = useState(false);
 
@@ -48,12 +46,12 @@ export default function UnitCardRoulette({unitName}) {
         }
 
         let newScrollPosition = scrollPosition + (newMousePositionX - mousePositionX);
-        if(newScrollPosition>=scrollPositionMin && newScrollPosition<=scrollPositionMax) {
-            setScrollPosition(newScrollPosition);
-        }
+        
+        setScrollPosition(newScrollPosition);
 
         setMousePositionX(newMousePositionX);
-    }, [dragging, scrollPosition, mousePositionX, scrollPositionMin, scrollPositionMax]);
+        console.log(newScrollPosition);
+    }, [dragging, scrollPosition, mousePositionX]);
 
     const handleRotationEnd = useCallback(e => {
         if(!dragging) return;
@@ -70,9 +68,9 @@ export default function UnitCardRoulette({unitName}) {
             onMouseUp={handleRotationEnd} onMouseLeave={handleRotationEnd}
             className={style.unit_card_roulette}
             style={{zIndex: "0", perspective: "500rem", transformStyle: "preserve-3d"}}>
-                <UnitCard scrollPosition={0} side={0} metadata={unitCardMetadata[unitName]} locked={false} chapterProgress={3}/>
-                <UnitCard scrollPosition={0} side={1} metadata={unitCardMetadata[unitName]} locked={true} chapterProgress={3}/>
-                <UnitCard scrollPosition={0} side={2} metadata={unitCardMetadata[unitName]} locked={true} chapterProgress={3}/>
+                <UnitCard scrollPosition={scrollPosition} side={0} metadata={unitCardMetadata[unitName]} locked={false} chapterProgress={3}/>
+                <UnitCard scrollPosition={scrollPosition} side={1} metadata={unitCardMetadata[unitName]} locked={true} chapterProgress={3}/>
+                <UnitCard scrollPosition={scrollPosition} side={2} metadata={unitCardMetadata[unitName]} locked={true} chapterProgress={3}/>
         </div>
     );
 }

@@ -24,19 +24,25 @@ export default function UnitCard({scrollPosition, side, metadata, locked, chapte
         navigate(`/learn/${metadata.chapters[targetIndex].segment}`);
     };
 
-    let rotationStartingPosition;
+    let rotationStartingPosition, rotationDirection;
     switch(side) {
         case 0:
-            rotationStartingPosition = "0s";
+            rotationStartingPosition = `${-Math.abs(scrollPosition)*0.01}s`;
             break;
         case 1:
-            rotationStartingPosition = `-${5/3}s`;
+            rotationStartingPosition = `${-5/3 - Math.abs(scrollPosition)*0.01}s`;
             break;
         case 2:
-            rotationStartingPosition = `-${10/3}s`;
+            rotationStartingPosition = `${-10/3 - Math.abs(scrollPosition)*0.01}s`;
             break;
         default:
             return (<></>);
+    }
+
+    if(scrollPosition>=0) {
+        rotationDirection = "reverse";
+    } else {
+        rotationDirection = "normal";
     }
 
     return (
@@ -44,8 +50,10 @@ export default function UnitCard({scrollPosition, side, metadata, locked, chapte
         {animationName: `${style.unit_card_rotation}`,
         animationDuration: `5s`,
         animationDelay: rotationStartingPosition,
+        animationDirection: rotationDirection,
         animationIterationCount: "infinite",
-        animationTimingFunction: "ease",
+        animationTimingFunction: "linear",
+        animationPlayState: "paused",
         background: `radial-gradient(50% 50% at 50% 50%, ${metadata.innerColor} 0%, ${metadata.outterColor} 100%)`
         }}>
         {   (locked) ?
