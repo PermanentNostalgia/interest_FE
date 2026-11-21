@@ -10,7 +10,6 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const [scrollPosition, setScrollPosition] = useState(0);
     const [mousePositionX, setMousePositionX] = useState(undefined);
     const [dragging, setDragging] = useState(false);
-    const [scrollLocked, setScrollLocked] = useState(false);
 
     const [orderedUnitCardMetadata, setOrderedUnitCardMetadata] = useState([]);
 
@@ -27,8 +26,6 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     },[]);
 
     const animateCardReturning = useCallback(() => {
-        setScrollLocked(true);
-
         let scrollDeparture = scrollPosition;
         let scrollDestination = Math.floor((Math.abs(scrollPosition) + rotationSpeed/rotationRatio/6) / (rotationSpeed/rotationRatio/3))*rotationSpeed/rotationRatio/3;
         if(scrollPosition<0) scrollDestination = -scrollDestination;
@@ -38,7 +35,6 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         animationTimer.current = setInterval(()=>{
             let newScrollPosition = scrollPositionTemp + scrollPositionDelta;
             if((scrollPositionDelta<0) ? (newScrollPosition<scrollDestination) : (newScrollPosition>scrollDestination)) {
-                setScrollLocked(false);
                 setScrollPosition(scrollDestination);
                 clearInterval(animationTimer.current);
                 animationTimer.current = null;
