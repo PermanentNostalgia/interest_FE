@@ -225,11 +225,11 @@
 }
 
 @keyframes unit_card_rotation {
-    33.33% {
+    33.33333% {
         transform: translate3d(-150rem, 0rem, -150rem) rotateY(30deg);
     }
 
-    66.66% {
+    66.66666% {
         transform: translate3d(150rem, 0rem, -150rem) rotateY(-30deg);
     }
 

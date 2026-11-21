@@ -3,11 +3,12 @@ import { useNavigate } from "react-router"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, side, metadata, locked, chapterProgress}) {
+export default function UnitCard({scrollPosition, side, rotationSpeed, metadata, chapterProgress}) {
     const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
+    
     useEffect(()=>{
-        if(!locked) {
+        if(!metadata["locked"]) {
             let chaptersList = metadata.chapters.map((chapter, index) => (
                 <p key={chapter.segment} className={`${style.chapter_title} ${(index<chapterProgress) ? style.highlight : ""}`}
                 style={{
@@ -25,30 +26,19 @@ export default function UnitCard({scrollPosition, side, metadata, locked, chapte
     };
 
     let rotationStartingPosition, rotationDirection;
-    switch(side) {
-        case 0:
-            rotationStartingPosition = `${-Math.abs(scrollPosition)*0.01}s`;
-            break;
-        case 1:
-            rotationStartingPosition = `${-5/3 - Math.abs(scrollPosition)*0.01}s`;
-            break;
-        case 2:
-            rotationStartingPosition = `${-10/3 - Math.abs(scrollPosition)*0.01}s`;
-            break;
-        default:
-            return (<></>);
-    }
 
-    if(scrollPosition>=0) {
+    if(scrollPosition>0) {
         rotationDirection = "reverse";
+        rotationStartingPosition = `${-rotationSpeed*(3-side)/3 - Math.abs(scrollPosition)*0.01}s`;
     } else {
         rotationDirection = "normal";
+        rotationStartingPosition = `${-rotationSpeed*side/3 - Math.abs(scrollPosition)*0.01}s`;
     }
 
     return (
-    <div className={`${style.unit_card} ${locked ? style.locked : style.unlocked}`} style={
+    <div className={`${style.unit_card} ${metadata["locked"] ? style.locked : style.unlocked}`} style={
         {animationName: `${style.unit_card_rotation}`,
-        animationDuration: `5s`,
+        animationDuration: `${rotationSpeed}s`,
         animationDelay: rotationStartingPosition,
         animationDirection: rotationDirection,
         animationIterationCount: "infinite",
@@ -56,7 +46,7 @@ export default function UnitCard({scrollPosition, side, metadata, locked, chapte
         animationPlayState: "paused",
         background: `radial-gradient(50% 50% at 50% 50%, ${metadata.innerColor} 0%, ${metadata.outterColor} 100%)`
         }}>
-        {   (locked) ?
+        {   (metadata["locked"]) ?
             (<><h1 className={`${style.unit_card_title} ${style.locked}`}>{metadata.title}</h1>
             <div className={style.unit_card_button}>이전 유닛을 완료하면 열려요</div>
             </>)
