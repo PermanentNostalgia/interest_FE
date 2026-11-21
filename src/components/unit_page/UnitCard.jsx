@@ -3,7 +3,7 @@ import { useNavigate } from "react-router"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, side, rotationSpeed, metadata, chapterProgress}) {
+export default function UnitCard({scrollPosition, side, rotationSpeed, rotationRatio, metadata, chapterProgress}) {
     const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
     
@@ -29,10 +29,10 @@ export default function UnitCard({scrollPosition, side, rotationSpeed, metadata,
 
     if(scrollPosition>0) {
         rotationDirection = "reverse";
-        rotationStartingPosition = `${-rotationSpeed*(3-side)/3 - Math.abs(scrollPosition)*0.01}s`;
+        rotationStartingPosition = `${-rotationSpeed*(3-side)/3 - Math.abs(scrollPosition)*rotationRatio}s`;
     } else {
         rotationDirection = "normal";
-        rotationStartingPosition = `${-rotationSpeed*side/3 - Math.abs(scrollPosition)*0.01}s`;
+        rotationStartingPosition = `${-rotationSpeed*side/3 - Math.abs(scrollPosition)*rotationRatio}s`;
     }
 
     return (

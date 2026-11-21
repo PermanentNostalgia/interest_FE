@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 
 import UnitCard from "./UnitCard"
 
@@ -6,12 +6,15 @@ import unitCardMetadata from "../../assets/unit_page/unit_card_metadata.js"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCardRoulette({unitName, rotationSpeed=3}) {
+export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRatio=0.01}) {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [mousePositionX, setMousePositionX] = useState(undefined);
     const [dragging, setDragging] = useState(false);
+    const [scrollLocked, setScrollLocked] = useState(false);
 
     const [orderedUnitCardMetadata, setOrderedUnitCardMetadata] = useState([]);
+
+    const animationTimer = useRef();
 
     useEffect(()=>{
         const newMetadata = [];
@@ -23,7 +26,34 @@ export default function UnitCardRoulette({unitName, rotationSpeed=3}) {
         setOrderedUnitCardMetadata(newMetadata);
     },[]);
 
+    const animateCardReturning = useCallback(() => {
+        setScrollLocked(true);
+
+        let scrollDeparture = scrollPosition;
+        let scrollDestination = Math.floor((Math.abs(scrollPosition) + rotationSpeed/rotationRatio/6) / (rotationSpeed/rotationRatio/3))*rotationSpeed/rotationRatio/3;
+        if(scrollPosition<0) scrollDestination = -scrollDestination;
+
+        let scrollPositionDelta = (scrollDestination-scrollDeparture)/10;
+        let scrollPositionTemp = scrollDeparture;
+        animationTimer.current = setInterval(()=>{
+            let newScrollPosition = scrollPositionTemp + scrollPositionDelta;
+            if((scrollPositionDelta<0) ? (newScrollPosition<scrollDestination) : (newScrollPosition>scrollDestination)) {
+                setScrollLocked(false);
+                setScrollPosition(scrollDestination);
+                clearInterval(animationTimer.current);
+                animationTimer.current = null;
+            } else {
+                setScrollPosition(newScrollPosition);
+                scrollPositionTemp = newScrollPosition;
+            }
+        }, 10);
+    },[scrollPosition]);
+
     const handleRotationStart = useCallback(e => {
+        if(animationTimer) {
+            clearInterval(animationTimer.current);
+        }
+
         e.stopPropagation();
 
         if(e.type=="touchstart") {
@@ -34,7 +64,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=3}) {
         }
 
         setDragging(true);
-    }, []);
+    }, [animationTimer.current]);
 
     const handleRotation = useCallback(e => {
         if(!dragging) return;
@@ -62,13 +92,14 @@ export default function UnitCardRoulette({unitName, rotationSpeed=3}) {
         e.stopPropagation();
 
         setDragging(false);
-    }, [dragging]);
+        animateCardReturning();
+    }, [dragging, animateCardReturning]);
 
     let unitCards = [];
     if(orderedUnitCardMetadata.length!=0) {
         unitCards = orderedUnitCardMetadata.map((metadata, index)=>{
             return(
-                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} chapterProgress={3}/>
+                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} rotationRatio={rotationRatio} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} chapterProgress={3}/>
             );
         })
     }
