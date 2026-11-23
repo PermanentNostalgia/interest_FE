@@ -295,3 +295,14 @@ body {
 .sim-choice { flex: 1; padding: 8px 0; border: 2px solid transparent; border-radius: 10px; background: rgba(255, 255, 255, 0.35); font: inherit; font-weight: 700; cursor: pointer; }
 .sim-choice.selected { border-color: #333; background: rgba(255, 255, 255, 0.8); }
 .sim-footer { font-weight: 700; }
+
+/* 상황 가정: 비교 예제 */
+.learn-card.example { display: flex; flex-direction: column; gap: 10px; }
+.example-title { font-weight: 700; }
+.example-company { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.3); }
+.example-name { font-size: 17px; font-weight: 700; }
+.example-line { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+.example-line.total { flex-direction: column; font-weight: 700; }
+.example-bar { height: 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
+.example-bar div { min-width: 4px; height: 100%; background: #ef7a6a; }
+.example-result { font-weight: 700; }

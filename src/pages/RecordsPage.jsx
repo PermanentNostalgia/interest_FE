@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import unitPageMetadata from "../assets/unit_page/unit_card_metadata.js";
 import BottomTab from "../components/common/BottomTab";
-import { getRecords } from "../utils/records";
+import { getRecords, resetScenarioRecords, resetTermRecords } from "../utils/records";
 import "./RecordsPage.css";
 
 const TABS = ["유닛", "시나리오", "자유투자"];
@@ -129,7 +129,13 @@ function FreeTradeList({ records }) {
 
 export default function RecordsPage() {
   const [tab, setTab] = useState(0);
-  const [records] = useState(getRecords);
+  const [records, setRecords] = useState(getRecords);
+
+  const handleReset = (message, reset) => {
+    if (!window.confirm(message)) return;
+    reset();
+    setRecords(getRecords());
+  };
 
   const units = Object.entries(unitPageMetadata).filter(
     ([, unit]) => unit.chapters.length > 0
@@ -178,8 +184,32 @@ export default function RecordsPage() {
         ))}
       </div>
 
-      {tab === 0 && <UnitList units={units} records={records} />}
-      {tab === 1 && <ScenarioList records={records} />}
+      {tab === 0 && (
+        <>
+          <UnitList units={units} records={records} />
+          <button
+            className="rec-reset"
+            onClick={() =>
+              handleReset("유닛 학습 기록을 모두 지울까요?", resetTermRecords)
+            }
+          >
+            초기화
+          </button>
+        </>
+      )}
+      {tab === 1 && (
+        <>
+          <ScenarioList records={records} />
+          <button
+            className="rec-reset"
+            onClick={() =>
+              handleReset("시나리오 기록을 모두 지울까요?", resetScenarioRecords)
+            }
+          >
+            초기화
+          </button>
+        </>
+      )}
       {tab === 2 && <FreeTradeList records={records} />}
 
       <BottomTab />

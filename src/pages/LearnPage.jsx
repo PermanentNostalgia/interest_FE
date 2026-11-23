@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 
 import learnPageMetadata from "../assets/learn_page/learn_page_metadata.js";
 import InterestSimulation from "../components/learn_page/InterestSimulation";
+import MarketCapExample from "../components/learn_page/MarketCapExample";
 import ValueSimulation from "../components/learn_page/ValueSimulation";
 import { saveTermResult } from "../utils/records";
 import "./LearnPage.css";
@@ -177,11 +178,14 @@ function LearnContent({ chapterName }) {
     return (
       <>
         {step.type === "explain" ? (
-          <div className="learn-card explain">
-            {step.lines.map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-          </div>
+          <>
+            <div className="learn-card explain">
+              {step.lines.map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+            {step.example === "market-cap" && <MarketCapExample />}
+          </>
         ) : step.simulation ? (
           <ValueSimulation type={step.simulation} />
         ) : (

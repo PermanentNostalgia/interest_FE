@@ -58,3 +58,17 @@ export function saveMockResult(scenario, result) {
 
   save(records);
 }
+
+// 유닛(용어 학습) 기록을 모두 지워요
+export function resetTermRecords() {
+  const records = load();
+  records.terms = {};
+  save(records);
+}
+
+// 시나리오 기록을 모두 지워요
+export function resetScenarioRecords() {
+  const records = load();
+  records.scenarios = {};
+  save(records);
+}

@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 
 import BottomTab from "../components/common/BottomTab"
 
 import unitCardMetadata from "../assets/unit_page/unit_card_metadata.js"
 import { getRecords } from "../utils/records"
+import { isUnitLocked } from "../utils/units"
 import style from "../styles/unit_page.module.css"
 
 export default function UnitDetailPage() {
@@ -11,13 +13,26 @@ export default function UnitDetailPage() {
     const navigate = useNavigate();
 
     const unit = unitCardMetadata[unitName];
-    const records = getRecords();
+    // 뒤로 가기·탭 전환으로 옛 화면이 되살아나도 최신 기록으로 다시 그려요
+    const [records, setRecords] = useState(getRecords);
+    useEffect(() => {
+        const refresh = () => setRecords(getRecords());
+        window.addEventListener("pageshow", refresh);
+        window.addEventListener("focus", refresh);
+        document.addEventListener("visibilitychange", refresh);
+        return () => {
+            window.removeEventListener("pageshow", refresh);
+            window.removeEventListener("focus", refresh);
+            document.removeEventListener("visibilitychange", refresh);
+        };
+    }, []);
 
-    if(!unit || unit.locked || unit.chapters.length==0) {
+    if(!unit || isUnitLocked(unit) || unit.chapters.length==0) {
         return <h1>'{unitName}' 유닛은 아직 열리지 않았어요.</h1>;
     }
 
-    const isLearned = chapter => Boolean(records.terms[chapter.segment]);
+    // 퀴즈를 모두 맞힌 용어만 체크해요 (틀렸거나 안 푼 용어는 체크 없음)
+    const isLearned = chapter => Boolean(records.terms[chapter.segment]?.correct);
     const chapterProgress = unit.chapters.filter(isLearned).length;
     const isFinished = chapterProgress == unit.chapters.length;
 

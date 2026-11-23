@@ -21,6 +21,8 @@ const unitPageMetadata = {
         innerColor: "#A8C840",
         outterColor: "#F08080",
         locked: false,
+        requires: "unit1",
+        lockHint: "잠겨있어요",
         chapters: [
             {name: "EPS", segment: "eps"},
             {name: "영업이익", segment: "operating-profit"},

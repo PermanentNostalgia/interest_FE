@@ -67,6 +67,7 @@ const learnPageMetadata = {
       {
         type: "explain",
         label: "상황 가정",
+        example: "market-cap",
         lines: [
           "(주)WAP상사의 주식이 1주에 10,000원이고, 옆 동네 우산 공장 주식은 1주에 50,000원이야.",
           "우산 공장 주식이 더 비싸니까, 우산 공장이 훨씬 큰 회사겠지? 라고 착각하기 쉬워.",
