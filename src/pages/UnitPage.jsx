@@ -22,7 +22,7 @@ export default function UnitPage() {
             <p className={`${style.unit_page_slogan} ${style.hello3}`}>
                 금융 용어 외우기
             </p>
-            <UnitCardRoulette unitName={unitName}/>
+            <UnitCardRoulette unitName={unitName} rotationSpeed={6}/>
             <BottomTab />
         </div>
     );

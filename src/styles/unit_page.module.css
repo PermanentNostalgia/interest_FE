@@ -1,6 +1,15 @@
 @media screen and (min-device-width: 300px) {
     html {
-        font-size: 2.97px;
+        font-size: 1px;
+    }
+
+    .unit_page {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+
+        background-color: white;
     }
 }
 
@@ -18,6 +27,7 @@
         left: calc(50% - 393rem/2);
         width: 393rem;
         height: 100vh;
+        overflow: hidden;
 
         background-color: white;
     }
@@ -217,4 +227,18 @@
     left: calc(50% - 199rem/2);
 
     border: 1rem solid #FFFFFF;
+}
+
+@keyframes unit_card_rotation {
+    33.33333% {
+        transform: translate3d(-150rem, 0rem, -150rem) rotateY(30deg);
+    }
+
+    66.66666% {
+        transform: translate3d(150rem, 0rem, -150rem) rotateY(-30deg);
+    }
+
+    100% {
+        transform: translate3d(0rem, 0rem, 0rem) rotateY(0deg);
+    }
 }

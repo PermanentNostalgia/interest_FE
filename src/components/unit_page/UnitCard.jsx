@@ -3,11 +3,12 @@ import { useNavigate } from "react-router"
 
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, metadata, locked, chapterProgress}) {
+export default function UnitCard({scrollPosition, side, rotationSpeed, rotationRatio, metadata, chapterProgress}) {
     const navigate = useNavigate();
     const [chapters, setChapters] = useState([]);
+    
     useEffect(()=>{
-        if(!locked) {
+        if(!metadata["locked"]) {
             let chaptersList = metadata.chapters.map((chapter, index) => (
                 <p key={chapter.segment} className={`${style.chapter_title} ${(index<chapterProgress) ? style.highlight : ""}`}
                 style={{
@@ -24,12 +25,28 @@ export default function UnitCard({scrollPosition, metadata, locked, chapterProgr
         navigate(`/learn/${metadata.chapters[targetIndex].segment}`);
     };
 
+    let rotationStartingPosition, rotationDirection;
+
+    if(scrollPosition>0) {
+        rotationDirection = "reverse";
+        rotationStartingPosition = `${-rotationSpeed*(3-side)/3 - Math.abs(scrollPosition)*rotationRatio}s`;
+    } else {
+        rotationDirection = "normal";
+        rotationStartingPosition = `${-rotationSpeed*side/3 - Math.abs(scrollPosition)*rotationRatio}s`;
+    }
+
     return (
-    <div className={`${style.unit_card} ${locked ? style.locked : style.unlocked}`} style={
-        {transform: `translate(${scrollPosition}rem, 0rem)`,
+    <div className={`${style.unit_card} ${metadata["locked"] ? style.locked : style.unlocked}`} style={
+        {animationName: `${style.unit_card_rotation}`,
+        animationDuration: `${rotationSpeed}s`,
+        animationDelay: rotationStartingPosition,
+        animationDirection: rotationDirection,
+        animationIterationCount: "infinite",
+        animationTimingFunction: "linear",
+        animationPlayState: "paused",
         background: `radial-gradient(50% 50% at 50% 50%, ${metadata.innerColor} 0%, ${metadata.outterColor} 100%)`
         }}>
-        {   (locked) ?
+        {   (metadata["locked"]) ?
             (<><h1 className={`${style.unit_card_title} ${style.locked}`}>{metadata.title}</h1>
             <div className={style.unit_card_button}>이전 유닛을 완료하면 열려요</div>
             </>)

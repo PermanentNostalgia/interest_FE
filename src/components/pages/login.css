@@ -1,161 +1,101 @@
-
-.login-screen,
-.login-screen *,
-.login-screen *::before,
-.login-screen *::after {
-  box-sizing: border-box;
-}
-
 .login-screen {
   position: relative;
-  width: min(100%, 393px, calc(100dvh * 393 / 852));
+  width: min(100vw, calc(100svh * 393 / 852));
   aspect-ratio: 393 / 852;
-  container-type: inline-size;
   margin: 0 auto;
   overflow: hidden;
-  background: #fff;
-  color: #000;
-
-  font-family:
-    Pretendard,
-    "Apple SD Gothic Neo",
-    "Noto Sans CJK KR",
-    "Malgun Gothic",
-    sans-serif;
-
+  container-type: inline-size;
+  background: #27dfff;
+  color: #fff;
+  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 원본 디자인 배경 */
-
-.login-screen::before,
-.login-screen::after {
-  content: "";
+.login-background {
   position: absolute;
+  z-index: 0;
   inset: 0;
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  display: block;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-.login-screen::before {
-  background-image: url("../../assets/login_intro_artwork.png");
-}
-
-.login-screen::after {
-  background-image: url("../../assets/login_main_artwork.png");
-  z-index: 1;
-  animation: login-art-switch 600ms 600ms both;
-}
-
-@keyframes login-art-switch {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* 이미지에 포함된 요소의 중복 표시 방지 */
-
-.login-background,
-.login-intro-logo,
-.login-logo,
-.login-statusbar,
-.login-home-indicator {
-  display: none;
-}
-
-/* 제목은 화면에는 이미지로 표시,
-   DOM에는 접근성용 텍스트로 유지 */
-
 .login-brand {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  z-index: 1;
+  top: 86.5cqw;
+  left: 0;
+  width: 100%;
 }
 
-/* 로그인 버튼 영역 */
+.login-mark {
+  position: absolute;
+  z-index: 1;
+  top: 191.35cqw;
+  left: 50%;
+  display: block;
+  width: 15.18cqw;
+  height: auto;
+  transform: translateX(-50%);
+  animation: login-mark-hide 250ms ease 1.65s forwards;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 10.18cqw;
+  font-weight: 700;
+  line-height: 13.23cqw;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
 
 .login-actions {
   position: absolute;
   z-index: 2;
-
-  left: 6.11cqw;
-  right: 6.11cqw;
-  bottom: 8.12%;
-
+  top: 167.18cqw;
+  left: 50%;
   display: flex;
+  width: 87.79cqw;
   flex-direction: column;
   align-items: center;
-  gap: 1.53cqw;
-
-  animation: login-actions-enter 1.2s 1.2s both;
+  opacity: 0;
+  transform: translate(-50%, 9.16cqw);
+  animation: login-rise 650ms cubic-bezier(0.2, 0.75, 0.25, 1) 2s forwards;
 }
-
-@keyframes login-actions-enter {
-  from {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(3.05cqw);
-  }
-
-  to {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-}
-
-/* SNS 안내 */
 
 .login-signup {
-  width: auto;
-  height: 4.33cqw;
-  line-height: 4.33cqw;
-  margin: 0;
-  color: #fff;
-
+  margin: 0 0 1.53cqw;
+  font-family: Inter, Pretendard, sans-serif;
   font-size: 3.56cqw;
   font-weight: 400;
-  white-space: nowrap;
-  text-align: center;
+  line-height: 4.33cqw;
 }
-
-/* 버튼 공통 */
 
 .login-kakao,
 .login-skip {
   display: flex;
   width: 100%;
   height: 11.7cqw;
-  flex: none;
   align-items: center;
   justify-content: center;
-
-  border-radius: 6.11cqw;
+  padding: 0 4cqw;
+  border: 0;
+  border-radius: 6.24cqw;
+  color: #191919;
   font-family: inherit;
-  font-size: 3.56cqw;
-  font-weight: 500;
+  font-size: 4.07cqw;
+  font-weight: 600;
   cursor: pointer;
-
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 카카오 로그인 */
-
 .login-kakao {
   gap: 2.04cqw;
-  padding: 0 4.07cqw;
-  border: 0;
   background: #f4e64f;
-  color: #191600;
+  color: #000;
+  box-shadow:
+    0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
 }
 
 .login-kakao:disabled {
@@ -164,61 +104,65 @@
 }
 
 .login-kakao-icon {
-  display: block;
-  width: 4.58cqw;
-  height: 4.33cqw;
+  width: 5.09cqw;
+  height: 4.58cqw;
   flex: none;
   fill: currentColor;
 }
 
-/* 튜토리얼 건너뛰기 */
-
 .login-skip {
-  margin-top: 1.53cqw;
-  padding: 0 3cqw;
-
-  border: 1px solid rgb(255 255 255 / 78%);
-  background: rgb(245 247 255 / 17%);
-
+  margin-top: 3.05cqw;
+  background: #cdd05f;
   box-shadow:
-    0 0.5cqw 2.04cqw rgb(0 0 0 / 18%),
-    inset 0 1px 1px rgb(255 255 255 / 75%);
-
+    0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
+  border: 0.5px solid rgb(255 255 255 / 90%);
   color: #fff;
-  white-space: nowrap;
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  font-size: 3.56cqw;
+  font-weight: 500;
 }
 
-.login-skip:focus-visible,
-.login-kakao:focus-visible {
-  outline: 3px solid #3b72ff;
+.login-kakao:focus-visible,
+.login-skip:focus-visible {
+  outline: 3px solid #fff;
   outline-offset: 3px;
 }
 
-/* 로그인 피드백 */
-
 .login-feedback {
-  max-width: 100%;
-  margin: 0.51cqw 0 0;
-  color: #24314a;
-  font-size: 3.05cqw;
-  line-height: 4.33cqw;
+  width: 100%;
+  margin: 3.05cqw 0 0;
+  color: #fff;
+  font-size: 3.56cqw;
+  line-height: 1.4;
   text-align: center;
   overflow-wrap: anywhere;
 }
 
 .login-feedback--error {
-  color: #c62828;
+  color: #8b0000;
 }
 
-/* 애니메이션 최소화 */
+@keyframes login-rise {
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes login-mark-hide {
+  to {
+    opacity: 0;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .login-screen::after,
   .login-actions {
-    animation-delay: 0s;
-    animation-duration: 1ms;
+    animation: none;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .login-mark {
+    animation: none;
+    opacity: 0;
   }
 }

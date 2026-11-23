@@ -1,6 +1,6 @@
 const unitPageMetadata = {
     unit1: {
-        previousUnit: null,
+        previousUnit: "unit3",
         nextUnit: "unit2",
         title: "UNIT 1",
         innerColor: "#FFE600",
@@ -20,15 +20,21 @@ const unitPageMetadata = {
         title: "UNIT 2",
         innerColor: "#E2FFFF",
         outterColor: "#FF9C9C",
-        locked: true
+        locked: true,
+        chapters: [
+
+        ]
     },
     unit3: {
         previousUnit: "unit2",
-        nextUnit: null,
+        nextUnit: "unit1",
         title: "UNIT 3",
         innerColor: "#E6FFE2",
         outterColor: "#348B5C",
-        locked: true
+        locked: true,
+        chapters: [
+            
+        ]
     }
 };
 
