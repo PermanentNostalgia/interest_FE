@@ -1,6 +1,7 @@
 const learnPageMetadata = {
   interest: {
     title: "금리",
+    subtitle: "돈에 붙는 이자의 비율",
     unit: "unit1",
     steps: [
       {
@@ -28,6 +29,10 @@ const learnPageMetadata = {
         ],
       },
       {
+        type: "simulation",
+        label: "금리 조절 체험",
+      },
+      {
         type: "quiz",
         label: "OX 퀴즈",
         questions: [
@@ -35,22 +40,21 @@ const learnPageMetadata = {
             question: "금리가 오르면 기업들은 은행에서 돈을 빌리기가 더 좋아진다.",
             options: ["O", "X"],
             answerIndex: 1,
+            explanation: "금리가 오르면 이자 부담이 커져서 기업들은 돈을 빌리기가 더 부담스러워져요.",
           },
           {
             question: "금리는 돈을 빌릴 때 내는 일종의 '사용료'라고 볼 수 있다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "금리는 돈을 빌릴 때 내는 사용료, 즉 이자의 비율이에요.",
           },
         ],
-      },
-      {
-        type: "simulation",
-        label: "금리 조절 체험",
       },
     ],
   },
   "market-cap": {
     title: "시가총액",
+    subtitle: "회사를 통째로 사는 데 필요한 가격",
     unit: "unit1",
     steps: [
       {
@@ -78,6 +82,11 @@ const learnPageMetadata = {
         ],
       },
       {
+        type: "simulation",
+        simulation: "market-cap",
+        label: "시가총액 체험",
+      },
+      {
         type: "quiz",
         label: "OX 퀴즈",
         questions: [
@@ -85,28 +94,27 @@ const learnPageMetadata = {
             question: "주식 1주 가격이 비싼 회사가 무조건 시가총액도 더 크다.",
             options: ["O", "X"],
             answerIndex: 1,
+            explanation: "1주 가격만으로는 회사 크기를 알 수 없어요. 발행된 주식 수를 곱해야 해요.",
           },
           {
             question: "시가총액은 현재 주식 가격에 총 발행 주식 수를 곱해서 계산한다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "시가총액은 주식 가격에 발행 주식 수를 곱한 값이에요.",
           },
           {
             question: "시가총액을 보면 이 기업이 시장에서 어느 정도의 덩치로 평가받는지 알 수 있다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "시가총액은 시장이 이 회사를 얼마나 큰 덩치로 평가하는지 보여줘요.",
           },
         ],
-      },
-      {
-        type: "simulation",
-        simulation: "market-cap",
-        label: "시가총액 체험",
       },
     ],
   },
   per: {
     title: "PER",
+    subtitle: "본전을 뽑는 데 걸리는 햇수",
     unit: "unit1",
     steps: [
       {
@@ -135,6 +143,11 @@ const learnPageMetadata = {
         ],
       },
       {
+        type: "simulation",
+        simulation: "per",
+        label: "PER 체험",
+      },
+      {
         type: "quiz",
         label: "OX 퀴즈",
         questions: [
@@ -142,23 +155,21 @@ const learnPageMetadata = {
             question: "PER 숫자가 낮을수록 투자한 본전을 회수하는 데 걸리는 시간이 더 길어진다.",
             options: ["O", "X"],
             answerIndex: 1,
+            explanation: "PER이 낮을수록 본전을 뽑는 데 걸리는 시간이 짧아요.",
           },
           {
             question: "PER은 기업이 버는 돈에 비해 현재 회사의 주가가 적당한지 보여주는 지표다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "PER은 번 돈에 비해 현재 주가가 적당한지 보여주는 지표예요.",
           },
         ],
-      },
-      {
-        type: "simulation",
-        simulation: "per",
-        label: "PER 체험",
       },
     ],
   },
   pbr: {
     title: "PBR",
+    subtitle: "회사 재산에 비해 주가가 어떤지",
     unit: "unit1",
     steps: [
       {
@@ -187,6 +198,11 @@ const learnPageMetadata = {
         ],
       },
       {
+        type: "simulation",
+        simulation: "pbr",
+        label: "PBR 체험",
+      },
+      {
         type: "quiz",
         label: "OX 퀴즈",
         questions: [
@@ -194,6 +210,7 @@ const learnPageMetadata = {
             question: "PBR이 1보다 낮다는 것은 회사가 가진 순수 재산(순자산) 가치보다 현재 주가가 더 싸게 거래되고 있다는 뜻이다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "PBR이 1보다 낮으면 가진 재산보다 싸게 거래되고 있다는 뜻이에요.",
           },
           {
             question: "PBR 숫자가 높을수록 회사가 망해서 문을 닫았을 때 투자자가 본전을 건지기가 더 안전하다.",
@@ -203,15 +220,11 @@ const learnPageMetadata = {
           },
         ],
       },
-      {
-        type: "simulation",
-        simulation: "pbr",
-        label: "PBR 체험",
-      },
     ],
   },
   roe: {
     title: "ROE",
+    subtitle: "내 밑천으로 번 돈의 비율",
     unit: "unit1",
     steps: [
       {
@@ -241,6 +254,11 @@ const learnPageMetadata = {
         ],
       },
       {
+        type: "simulation",
+        simulation: "roe",
+        label: "ROE 체험",
+      },
+      {
         type: "quiz",
         label: "OX 퀴즈",
         questions: [
@@ -248,6 +266,7 @@ const learnPageMetadata = {
             question: "ROE가 높다는 것은 기업이 가진 밑천(자기자본) 대비 1년 동안 순이익을 많이 남겼다는 뜻이다.",
             options: ["O", "X"],
             answerIndex: 0,
+            explanation: "ROE는 밑천 대비 1년 동안 남긴 순이익의 비율이에요.",
           },
           {
             question: "만약 어떤 회사의 ROE가 은행 정기예금 금리보다 훨씬 낮다면, 밑천을 매우 효율적으로 굴려 큰 이익을 낸 셈이다.",
@@ -256,11 +275,6 @@ const learnPageMetadata = {
             explanation: "은행에 가만히 넣어둬도 나오는 이자보다 수익률이 낮다면 밑천을 비효율적으로 굴린 거예요.",
           },
         ],
-      },
-      {
-        type: "simulation",
-        simulation: "roe",
-        label: "ROE 체험",
       },
     ],
   },
