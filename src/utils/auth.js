@@ -1,32 +1,25 @@
-const AUTH_KEY = "wap-auth";
+const SESSION_TOKEN_KEY = "session_token";
 
-export function saveAuth(responseBody) {
-  try {
-    localStorage.setItem(
-      AUTH_KEY,
-      JSON.stringify({
-        token: responseBody?.token,
-        nickname: responseBody?.nickname,
-        profileImageUrl: responseBody?.profileImageUrl,
-      }),
-    );
-  } catch {
-    /* 저장 불가 환경이면 건너뜀 */
-  }
+export function saveSessionToken(token) {
+  window.sessionStorage.setItem(SESSION_TOKEN_KEY, token);
 }
 
-export function getAuth() {
-  try {
-    return JSON.parse(localStorage.getItem(AUTH_KEY)) ?? null;
-  } catch {
-    return null;
-  }
+export function getSessionToken() {
+  return window.sessionStorage.getItem(SESSION_TOKEN_KEY);
 }
 
-export function clearAuth() {
-  try {
-    localStorage.removeItem(AUTH_KEY);
-  } catch {
-    /* noop */
+export function authenticatedFetch(input, options = {}) {
+  const token = getSessionToken();
+  if (!token) {
+    throw new Error("로그인이 필요합니다.");
   }
+
+  const headers = new Headers(options.headers);
+  headers.set("Authorization", `Bearer ${token}`);
+
+  return fetch(input, {
+    ...options,
+    headers,
+    credentials: "omit",
+  });
 }

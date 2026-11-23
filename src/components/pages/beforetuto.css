@@ -68,7 +68,7 @@
   background: rgb(242 244 251 / 20%);
   box-shadow: 0 0.51cqw 2.04cqw rgb(0 0 0 / 25%);
   color: #fff;
-  font-family: Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: inherit;
   text-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -95,12 +95,12 @@
 }
 
 .beforetuto-option--selected {
-  background: #dff3f6;
+  background: #fff;
   color: #0c124f;
 }
 
 .beforetuto-option--selected .beforetuto-option-description {
-  color: #4e5e91;
+  color: #000F5C;
 }
 
 .beforetuto-option:focus-visible {
@@ -112,25 +112,3 @@
   cursor: default;
 }
 
-.beforetuto-tabbar {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  height: 11.2cqw;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 2.04cqw;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  pointer-events: none;
-}
-
-.beforetuto-home-indicator {
-  width: 34.1cqw;
-  height: 1.27cqw;
-  border-radius: 100px;
-  background: #fff;
-}
