@@ -3,8 +3,8 @@ const unitPageMetadata = {
         previousUnit: "unit3",
         nextUnit: "unit2",
         title: "UNIT 1",
-        innerColor: "#FFE600",
-        outterColor: "#27DFFF",
+        innerColor: "#E8700A",
+        outterColor: "#E8DC6E",
         locked: false,
         chapters: [
             {name: "금리", segment: "interest"},
@@ -18,8 +18,8 @@ const unitPageMetadata = {
         previousUnit: "unit1",
         nextUnit: "unit3",
         title: "UNIT 2",
-        innerColor: "#E2FFFF",
-        outterColor: "#FF9C9C",
+        innerColor: "#A8C840",
+        outterColor: "#F08080",
         locked: true,
         chapters: [
 
@@ -29,8 +29,8 @@ const unitPageMetadata = {
         previousUnit: "unit2",
         nextUnit: "unit1",
         title: "UNIT 3",
-        innerColor: "#E6FFE2",
-        outterColor: "#348B5C",
+        innerColor: "#1F6B1F",
+        outterColor: "#7BC000",
         locked: true,
         chapters: [
             

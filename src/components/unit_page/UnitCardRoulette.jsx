@@ -91,11 +91,16 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         animateCardReturning();
     }, [dragging, animateCardReturning]);
 
+    const stepSize = rotationSpeed/rotationRatio/3;
+    const frontSide = ((Math.round(scrollPosition/stepSize) % 3) + 3) % 3;
+    const unitKeys = Object.keys(unitCardMetadata);
+    const frontKey = unitKeys.find(key => unitCardMetadata[key] === orderedUnitCardMetadata[frontSide]);
+
     let unitCards = [];
     if(orderedUnitCardMetadata.length!=0) {
         unitCards = orderedUnitCardMetadata.map((metadata, index)=>{
             return(
-                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} rotationRatio={rotationRatio} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} chapterProgress={3}/>
+                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} rotationRatio={rotationRatio} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} chapterProgress={3} isFront={index===frontSide}/>
             );
         })
     }
@@ -108,6 +113,9 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
             className={style.unit_card_roulette}
             style={{zIndex: "0", perspective: "500rem", transformStyle: "preserve-3d"}}>
             {unitCards}
+            <div className={style.unit_dots}>
+                {unitKeys.map(key => <span key={key} className={key === frontKey ? style.active : ""}></span>)}
+            </div>
         </div>
     );
 }

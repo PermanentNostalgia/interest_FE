@@ -14,13 +14,13 @@ export default function UnitPage() {
     return(
         <div className={style.unit_page}>
             <p className={`${style.unit_page_slogan} ${style.hello1}`}>
-                안녕하세요, Test1님!
+                금융 용어 배우기
             </p>
             <p className={`${style.unit_page_slogan} ${style.hello2}`}>
                 오늘은 뭘 배워볼까요?
             </p>
             <p className={`${style.unit_page_slogan} ${style.hello3}`}>
-                금융 용어 외우기
+                시작해봐요
             </p>
             <UnitCardRoulette unitName={unitName} rotationSpeed={6}/>
             <BottomTab />
