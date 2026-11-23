@@ -136,6 +136,16 @@
   box-shadow: 0 0.51cqw 2.14cqw rgb(0 0 0 / 30%);
 }
 
+.tuto-continue.tuto-continue--selected {
+  background: #fff;
+  box-shadow: 0 0.51cqw 2.14cqw rgb(0 0 0 / 30%);
+  color: #0c124f;
+}
+
+.tuto-continue:disabled {
+  cursor: default;
+}
+
 .tuto-continue:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
