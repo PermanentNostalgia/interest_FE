@@ -2,43 +2,43 @@ import { useState } from "react";
 
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import BottomTab from "../components/common/BottomTab";
+import FreeSetup from "../components/mock_invest/FreeSetup";
 import FreeStockSelect from "../components/mock_invest/FreeStockSelect";
-import PeriodSelect from "../components/mock_invest/PeriodSelect";
+import MockHeader from "../components/mock_invest/MockHeader";
 import ScenarioCard from "../components/mock_invest/ScenarioCard";
+import ScenarioIntro from "../components/mock_invest/ScenarioIntro";
 import TradeMain from "../components/mock_invest/TradeMain";
 import TradeResult from "../components/mock_invest/TradeResult";
 import "./MockInvestPage.css";
 
 export default function MockInvestPage() {
   const [step, setStep] = useState("mode");
-  const [selectedStock, setSelectedStock] = useState(null);
   const [selectedScenario, setSelectedScenario] = useState(null);
+  const [freeSetup, setFreeSetup] = useState(null);
   const [result, setResult] = useState(null);
 
   // 시나리오 모드: 기존 임시 데이터(scenario_metadata.js) 사용
   const handleSelectScenario = (scenario) => {
     setSelectedScenario(scenario);
-    setStep("trade");
+    setStep("intro");
   };
 
-  // 자유 투자 모드: 고른 종목 + 시작 시점으로 거래 화면에 넘길 데이터를 만들어요
+  // 자유 투자 모드: 정한 조건 + 고른 종목으로 거래 화면에 넘길 데이터를 만들어요
   const handleSelectStock = (stock) => {
-    setSelectedStock(stock);
-    setStep("free-period");
-  };
-
-  const handleSelectPeriod = (period) => {
-    const dates = selectedStock.dates.slice(-period.days);
-    const prices = selectedStock.prices.slice(-period.days);
+    const startIndex = Math.max(0, stock.dates.length - freeSetup.offset);
+    const endIndex = Math.min(stock.dates.length, startIndex + freeSetup.days);
+    const dates = stock.dates.slice(startIndex, endIndex);
+    const prices = stock.prices.slice(startIndex, endIndex);
 
     setSelectedScenario({
-      id: `free-${selectedStock.stockCode}`,
+      id: `free-${stock.stockCode}`,
       mode: "free",
-      stockName: selectedStock.stockName,
+      stockName: stock.stockName,
       startDate: dates[0],
+      startCash: freeSetup.cash,
       dates,
       prices,
-      companyInfo: selectedStock.companyInfo,
+      companyInfo: stock.companyInfo,
     });
     setStep("trade");
   };
@@ -49,7 +49,7 @@ export default function MockInvestPage() {
   };
 
   const handleBackFromTrade = () => {
-    setStep(selectedScenario.mode === "free" ? "free-period" : "select");
+    setStep(selectedScenario.mode === "free" ? "free-stock" : "intro");
   };
 
   let content;
@@ -73,50 +73,67 @@ export default function MockInvestPage() {
   } else if (step === "select") {
     content = (
       <>
-        <button className="mock-link" onClick={() => setStep("mode")}>
-          ← 모드 다시 고르기
-        </button>
-        <h1 className="mock-title">어떤 종목으로 시작할까요?</h1>
-        {scenarioMetadata.map((scenario) => (
-          <ScenarioCard
-            key={scenario.id}
-            scenario={scenario}
-            onSelect={handleSelectScenario}
-          />
-        ))}
+        <MockHeader
+          eyebrow="배운 용어를 정해진 상황에서 써봐요"
+          title="시나리오 모드"
+          onBack={() => setStep("mode")}
+        />
+        {scenarioMetadata
+          .filter((scenario) => scenario.title)
+          .map((scenario, index) => (
+            <ScenarioCard
+              key={scenario.id}
+              scenario={scenario}
+              index={index}
+              onSelect={handleSelectScenario}
+            />
+          ))}
       </>
+    );
+  } else if (step === "intro") {
+    content = (
+      <ScenarioIntro
+        scenario={selectedScenario}
+        index={scenarioMetadata.indexOf(selectedScenario)}
+        onStart={() => setStep("trade")}
+        onBack={() => setStep("select")}
+      />
+    );
+  } else if (step === "free-setup") {
+    content = (
+      <FreeSetup
+        onNext={(setup) => {
+          setFreeSetup(setup);
+          setStep("free-stock");
+        }}
+        onBack={() => setStep("mode")}
+      />
     );
   } else if (step === "free-stock") {
     content = (
       <FreeStockSelect
         onSelect={handleSelectStock}
-        onBack={() => setStep("mode")}
-      />
-    );
-  } else if (step === "free-period") {
-    content = (
-      <PeriodSelect
-        stock={selectedStock}
-        onSelect={handleSelectPeriod}
-        onBack={() => setStep("free-stock")}
+        onBack={() => setStep("free-setup")}
       />
     );
   } else {
     content = (
       <>
-        <p className="mock-part">B Part · 모의투자</p>
-        <h1 className="mock-title">어떻게 연습해 볼까요?</h1>
+        <header className="mock-mode-head">
+          <p>배운 내용으로 투자 해보기</p>
+          <h1>어떻게 연습해 볼까요?</h1>
+        </header>
 
-        <button className="mock-scenario" onClick={() => setStep("select")}>
+        <button className="mock-mode-card" onClick={() => setStep("select")}>
           <strong>시나리오 모드</strong>
           <span>정해진 상황 속에서 배운 내용을 복습해보아요</span>
         </button>
         <button
-          className="mock-scenario"
-          onClick={() => setStep("free-stock")}
+          className="mock-mode-card"
+          onClick={() => setStep("free-setup")}
         >
           <strong>자유 투자 모드</strong>
-          <span>실제 종목을 골라 과거 시세로 투자해 봐요</span>
+          <span>실제 종목을 골라 과거 시세로 투자해보아요</span>
         </button>
       </>
     );

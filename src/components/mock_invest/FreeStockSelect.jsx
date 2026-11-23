@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import freeStockData from "../../assets/mock_invest/free_stock_data.js";
+import MockHeader from "./MockHeader";
 
 export default function FreeStockSelect({ onSelect, onBack }) {
   const [query, setQuery] = useState("");
@@ -14,10 +15,11 @@ export default function FreeStockSelect({ onSelect, onBack }) {
 
   return (
     <>
-      <button className="mock-link" onClick={onBack}>
-        ← 모드 다시 고르기
-      </button>
-      <h1 className="mock-title">종목을 검색해 보세요</h1>
+      <MockHeader
+        eyebrow="투자할 종목을 골라 보세요"
+        title="종목 검색"
+        onBack={onBack}
+      />
 
       <input
         className="mock-search"
@@ -28,13 +30,13 @@ export default function FreeStockSelect({ onSelect, onBack }) {
       />
 
       {results.length === 0 && (
-        <p className="mock-subtitle">검색 결과가 없어요</p>
+        <p className="mock-notice">검색 결과가 없어요</p>
       )}
 
       {results.map((stock) => (
         <button
           key={stock.stockCode}
-          className="mock-scenario"
+          className="mock-list-item"
           onClick={() => onSelect(stock)}
         >
           <strong>{stock.stockName}</strong>

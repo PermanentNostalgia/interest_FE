@@ -1,78 +1,444 @@
+@font-face {
+  font-family: "Ria Sans";
+  src: url("../assets/fonts/RiaSans-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 .mock-page {
+  --mock-navy: #0b1a5e;
+  --mock-red: #ff1a1a;
+  --mock-blue: #1f3bff;
+  --mock-glass: rgba(255, 255, 255, 0.2);
+  --mock-glass-border: rgba(255, 255, 255, 0.55);
+  --mock-white: rgba(255, 255, 255, 0.92);
+
   box-sizing: border-box;
-  max-width: 390px;
+  max-width: 393px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 24px 20px 100px;
+  padding: 24px 24px 100px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  color: #1a1a1a;
+  gap: 14px;
+  color: var(--mock-navy);
   background: #86c7c0 url("../assets/Rectangle2.png") center / cover no-repeat;
 }
 
-.mock-part {
+.mock-page h1,
+.mock-page h2,
+.mock-page h3,
+.mock-page p {
   margin: 0;
-  text-align: center;
-  font-size: 12px;
+}
+
+/* 모드 선택 */
+.mock-page:has(.mock-mode-card) {
+  gap: 22px;
+}
+
+.mock-mode-head {
+  margin-top: 56px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
   color: #fff;
 }
 
-.mock-title {
-  margin: 8px 0 0;
-  text-align: center;
+.mock-mode-head p {
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mock-mode-head h1 {
   font-size: 28px;
-  color: #fff;
+  font-weight: 700;
 }
 
-.mock-subtitle {
-  margin: 0;
-  text-align: center;
-  font-size: 13px;
-  color: #fff;
-}
-
-/* 유리 느낌 공통 */
-.mock-card,
-.mock-scenario,
-.mock-btn,
-.mock-toggle button,
-.mock-banner {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 24px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  color: #1a1a1a;
-}
-
-.mock-card {
+.mock-mode-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
   padding: 20px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  color: #fff;
+  background: var(--mock-glass);
+  border: 1px solid var(--mock-glass-border);
+  border-radius: 32px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* 시나리오 카드 */
-.mock-scenario {
+.mock-mode-card strong {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.mock-mode-card span {
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mock-mode-card:hover,
+.mock-mode-card:focus-visible,
+.mock-mode-card:active {
+  color: var(--mock-navy);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+/* 머리글 */
+.mock-header {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 20px;
-  text-align: left;
-  font-family: inherit;
-  font-size: 13px;
+  margin: 28px 0 10px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  color: #fff;
+}
+
+.mock-header p {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mock-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.mock-back {
+  align-self: flex-start;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-bottom: 6px;
+  border: none;
+  background: none;
+  color: #fff;
   cursor: pointer;
 }
 
-.mock-scenario strong {
+.mock-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  margin-top: 28px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mock-top .mock-back {
+  position: absolute;
+  left: 0;
+  margin: 0;
+}
+
+.mock-stock {
+  text-align: center;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--mock-navy);
+}
+
+.mock-stock-sub {
+  margin-top: -6px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mock-navy);
+}
+
+.mock-stock--white,
+.mock-stock-sub--white {
+  color: #fff;
+}
+
+/* 유리 카드 */
+.mock-card,
+.mock-btn,
+.mock-toggle button,
+.mock-chips button,
+.mock-qty-stepper > button,
+.mock-list-item,
+.mock-scenario-card {
+  background: var(--mock-glass);
+  border: 1px solid var(--mock-glass-border);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  color: var(--mock-navy);
+}
+
+.mock-card {
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 28px;
+}
+
+.mock-card h2 {
+  text-align: center;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mock-card--solid {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* 흰색 큰 버튼 */
+.mock-cta {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 18px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
   font-size: 16px;
+  font-weight: 700;
+  color: var(--mock-navy);
+  background: var(--mock-white);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.mock-cta:disabled {
+  cursor: default;
+}
+
+/* 시나리오 목록 */
+.mock-scenario-card {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 18px 18px;
+  border-radius: 28px;
+  text-align: center;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  color: #fff;
+}
+
+.mock-scenario-no {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mock-scenario-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--mock-navy);
+}
+
+.mock-scenario-topic {
+  margin-bottom: 8px;
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mock-navy);
+}
+
+.mock-open-tag {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mock-lock {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  color: rgba(11, 26, 94, 0.55);
+}
+
+.mock-scenario-card .mock-cta {
+  margin-top: 4px;
+  padding: 14px;
+  font-size: 14px;
+}
+
+.mock-scenario-card.locked {
+  opacity: 0.75;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mock-scenario-card.locked h2 {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mock-scenario-card.locked .mock-cta {
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(11, 26, 94, 0.22);
+  box-shadow: none;
+}
+
+/* 시나리오 소개, 연습 조건 */
+.mock-situation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 28px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.mock-situation h2 {
+  margin-bottom: 18px;
+  color: var(--mock-navy);
+}
+
+.mock-situation p {
+  min-height: 1.5em;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.mock-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mock-fields h2 {
+  margin-bottom: 8px;
+}
+
+.mock-field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 22px;
+  background: var(--mock-white);
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.mock-field > span:first-child {
+  flex: 0 0 72px;
+  text-align: center;
+}
+
+.mock-field strong,
+.mock-field select {
+  flex: 1;
+  font-family: Pretendard, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: right;
+  color: var(--mock-navy);
+}
+
+.mock-field select {
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  direction: rtl;
+}
+
+.mock-spinner {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mock-spinner button {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--mock-navy);
+  cursor: pointer;
+}
+
+/* 평가금액, 손익 */
+.mock-chart-card {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.mock-label {
+  font-size: 10px;
+}
+
+.mock-eval {
+  margin: 4px 0 !important;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.mock-profit {
+  margin-bottom: 12px !important;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.up {
+  color: var(--mock-red);
+}
+
+.down {
+  color: var(--mock-blue);
+}
+
+.mock-segment {
+  display: flex;
+  margin-top: 12px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--mock-glass-border);
+  border-radius: 999px;
+}
+
+.mock-segment button {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mock-navy);
+  cursor: pointer;
+}
+
+.mock-segment button.active {
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* 버튼 */
 .mock-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  width: 100%;
-  padding: 16px;
-  font-family: inherit;
+  padding: 12px 8px;
+  border-radius: 999px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
@@ -86,27 +452,35 @@
 }
 
 .mock-btn.primary {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--mock-white);
 }
 
 .mock-btn.sell {
-  color: #c0392b;
+  color: var(--mock-red);
 }
 
 .mock-btn.buy {
-  color: #1b7a4a;
+  color: var(--mock-blue);
 }
 
 .mock-actions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
-/* 1일 / 1주 선택 */
+.mock-actions--two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 재생, 넘기기 */
 .mock-skip-row {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+}
+
+.mock-skip-row > .mock-btn {
+  flex: 1;
 }
 
 .mock-toggle {
@@ -115,257 +489,18 @@
 }
 
 .mock-toggle button {
-  padding: 10px 16px;
-  border-radius: 20px;
-  font-family: inherit;
+  width: 52px;
+  border-radius: 999px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .mock-toggle button.active {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--mock-white);
 }
 
-.mock-skip-row .mock-btn {
-  flex: 1;
-  width: auto;
-  padding: 10px 16px;
-  border-radius: 20px;
-}
-
-/* 평가금액, 손익 */
-.mock-label {
-  margin: 0;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.mock-eval {
-  margin: 4px 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
-.mock-profit {
-  margin: 0 0 8px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.up {
-  color: #1b7a4a;
-}
-
-.down {
-  color: #c0392b;
-}
-
-/* 정보 행 */
-.mock-section {
-  margin: 0 0 6px;
-  font-size: 13px;
-  font-weight: 700;
-  opacity: 0.75;
-}
-
-.mock-info-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-size: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.mock-info-row:last-child {
-  border-bottom: none;
-}
-
-.mock-link {
-  align-self: flex-start;
-  padding: 0;
-  border: none;
-  background: none;
-  color: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-/* 안전장치 배너 */
-.mock-banner {
-  padding: 16px;
-  background: rgba(255, 236, 160, 0.75);
-}
-
-.mock-banner p {
-  margin: 0 0 10px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.mock-banner-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.mock-banner-actions .mock-btn {
-  padding: 12px;
-  border-radius: 16px;
-}
-
-/* 결과 화면 */
-.mock-result {
-  margin: 4px 0 0;
-  text-align: center;
-  font-size: 30px;
-  font-weight: 800;
-}
-
-.mock-feedback p {
-  margin: 8px 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* 재무제표 모달 */
-.mock-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-}
-
-.mock-sheet {
-  box-sizing: border-box;
-  width: min(390px, 100%);
-  padding: 20px 20px 28px;
-  border-radius: 24px 24px 0 0;
-  background: rgba(255, 255, 255, 0.95);
-  color: #1a1a1a;
-}
-
-.mock-sheet h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-.mock-sheet .mock-btn {
-  margin-top: 12px;
-}
-.mock-search {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 14px 18px;
-  font-family: inherit;
-  font-size: 14px;
-  color: #1a1a1a;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 20px;
-  outline: none;
-}
-
-.mock-notice {
-  margin: 4px 0 0;
-  font-size: 11px;
-  line-height: 1.5;
-  text-align: center;
-  color: #fff;
-  opacity: 0.9;
-}
-
-.mock-news-tag {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #c0392b;
-}
-
-.mock-news-body {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.mock-news-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 0;
-  font-size: 13px;
-}
-.mock-qty {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.mock-qty-stepper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mock-qty-stepper button {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.6);
-  color: #1a1a1a;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.mock-qty-stepper input {
-  box-sizing: border-box;
-  width: 72px;
-  padding: 8px;
-  text-align: center;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
-  color: #1a1a1a;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 12px;
-  outline: none;
-}
-
-.mock-chips {
-  display: flex;
-  gap: 6px;
-  margin: 10px 0;
-}
-
-.mock-chips button {
-  flex: 1;
-  padding: 8px 0;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.4);
-  color: #1a1a1a;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.mock-hint {
-  margin: 0;
-  text-align: center;
-  font-size: 12px;
-  color: #c0392b;
-}
 .mock-play {
   position: relative;
   overflow: hidden;
@@ -382,7 +517,7 @@
   bottom: 0;
   left: 0;
   width: 0;
-  background: rgba(110, 200, 140, 0.55);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .mock-play-fill.running {
@@ -397,4 +532,275 @@
   to {
     width: 100%;
   }
+}
+
+/* 수량 */
+.mock-qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mock-qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mock-qty-stepper > button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--mock-white);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mock-qty-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 98px;
+  height: 36px;
+  background: var(--mock-white);
+  border-radius: 999px;
+}
+
+.mock-qty-input input {
+  box-sizing: border-box;
+  width: 36px;
+  padding: 0;
+  text-align: center;
+  font-family: Pretendard, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--mock-navy);
+  background: none;
+  border: none;
+  outline: none;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.mock-qty-input input::-webkit-outer-spin-button,
+.mock-qty-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mock-chips {
+  display: flex;
+  gap: 6px;
+  margin: 12px 0 4px;
+}
+
+.mock-chips button {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mock-more {
+  display: block;
+  margin: 8px auto 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mock-more.open svg {
+  transform: rotate(180deg);
+}
+
+.mock-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--mock-red);
+}
+
+/* 정보 행 */
+.mock-section {
+  margin-bottom: 6px !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mock-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(11, 26, 94, 0.15);
+}
+
+.mock-info-row:last-child {
+  border-bottom: none;
+}
+
+.mock-news .mock-section {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.mock-news-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 15px;
+}
+
+.mock-news-item span {
+  flex: none;
+  font-size: 12px;
+}
+
+.mock-news-tag {
+  margin-bottom: 6px !important;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mock-red);
+}
+
+.mock-news-body {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 종목 검색 */
+.mock-search {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--mock-navy);
+  background: var(--mock-white);
+  border: none;
+  border-radius: 999px;
+  outline: none;
+}
+
+.mock-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 22px;
+  border-radius: 24px;
+  text-align: left;
+  font-family: Pretendard, sans-serif;
+  cursor: pointer;
+}
+
+.mock-list-item strong {
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 16px;
+}
+
+.mock-list-item span {
+  font-size: 12px;
+}
+
+.mock-notice {
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+/* 결과 */
+.mock-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 20px;
+}
+
+.mock-result-rate {
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+}
+
+.mock-result-profit {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mock-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.mock-feedback h2 {
+  font-size: 14px;
+  color: var(--mock-navy);
+}
+
+.mock-feedback p {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mock-relearn {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mock-navy);
+  text-decoration: none;
+}
+
+/* 재무제표 모달 */
+.mock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.mock-sheet {
+  box-sizing: border-box;
+  width: min(393px, 100%);
+  padding: 20px 24px 28px;
+  border-radius: 28px 28px 0 0;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--mock-navy);
+}
+
+.mock-sheet h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.mock-sheet .mock-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.mock-sheet .mock-btn.primary {
+  background: var(--mock-navy);
+  color: #fff;
 }
