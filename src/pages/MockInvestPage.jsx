@@ -9,6 +9,7 @@ import ScenarioCard from "../components/mock_invest/ScenarioCard";
 import ScenarioIntro from "../components/mock_invest/ScenarioIntro";
 import TradeMain from "../components/mock_invest/TradeMain";
 import TradeResult from "../components/mock_invest/TradeResult";
+import { saveMockResult } from "../utils/records";
 import "./MockInvestPage.css";
 
 export default function MockInvestPage() {
@@ -44,6 +45,7 @@ export default function MockInvestPage() {
   };
 
   const handleFinish = (tradeResult) => {
+    saveMockResult(selectedScenario, tradeResult);
     setResult(tradeResult);
     setStep("result");
   };

@@ -1,0 +1,216 @@
+.rec-page {
+  --rec-navy: #0b1a5e;
+  --rec-red: #ff4d4d;
+  --rec-blue: #4f8ff7;
+
+  box-sizing: border-box;
+  max-width: 393px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 84px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--rec-navy);
+  background: #86c7c0 url("../assets/Rectangle2.png") center / cover no-repeat;
+}
+
+.rec-page h1,
+.rec-page h2,
+.rec-page p {
+  margin: 0;
+}
+
+.rec-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  color: #fff;
+}
+
+.rec-header p {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rec-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* 요약 */
+.rec-summary {
+  display: flex;
+  margin-bottom: 14px;
+  padding: 22px 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 28px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  color: #fff;
+}
+
+.rec-summary div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.rec-summary div + div {
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.rec-summary span {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.rec-summary strong {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* 탭 */
+.rec-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.rec-tabs button {
+  flex: 1;
+  height: 42px;
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.rec-tabs button.active {
+  color: var(--rec-navy);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.rec-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.rec-progress span {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.rec-progress span.active {
+  background: #fff;
+}
+
+/* 목록 */
+.rec-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rec-section h2 {
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.rec-section h2 strong {
+  margin-right: 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rec-row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 14px 0 32px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.rec-row--tall {
+  min-height: 80px;
+  padding: 12px 22px 12px 32px;
+  border-radius: 32px;
+}
+
+.rec-name {
+  font-family: "Ria Sans", Pretendard, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.rec-sub {
+  margin-top: 4px !important;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rec-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 106px;
+  height: 38px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.22);
+}
+
+.rec-badge--wide {
+  width: 106px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.rec-badge.correct,
+.rec-badge.down {
+  background: var(--rec-blue);
+}
+
+.rec-badge.review,
+.rec-badge.up {
+  background: var(--rec-red);
+}
+
+.rec-check {
+  display: flex;
+  color: var(--rec-navy);
+}
+
+.rec-empty {
+  margin-top: 24px !important;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
