@@ -4,6 +4,15 @@ const scenarioMetadata = [
     stockName: "WAP전자",
     startDate: "2021.03",
     description: "호외요! 한국은행이 기준금리 0.25%p 인상했다고 하네요.",
+    title: "금리가 오르던 날",
+    topic: "금리 • 입문 • 약 5분",
+    situation: [
+      "정책 금리 인상 소식이 들려왔어요",
+      "WAP 전자의 주가는 어떻게 움직일까요?",
+      "",
+      "금리만으로 결과를 단정하지 않고",
+      "다른 정보도 확인하며 판단해봐요",
+    ],
     prices: [68700, 69100, 68400, 69500, 70200, 70800, 68900, 67200, 66100, 66800, 65400, 64900, 65700, 64200, 63800],
     news: [
       {
@@ -30,6 +39,9 @@ const scenarioMetadata = [
     stockName: "B바이오",
     startDate: "2020.06",
     description: "이 기업, 생각보다 고평가받고 있는거 같은데요?",
+    title: "기업의 크기를 비교해요",
+    locked: true,
+    unlockHint: "UNIT 1 심화 체험을 마치면 열려요",
     prices: [52000, 53500, 55200, 58000, 57000, 61000, 63500, 62000, 66000, 69000, 67500, 64000, 60500, 58000, 55000],
     companyInfo: {
       stockCode: "234567",
@@ -49,6 +61,9 @@ const scenarioMetadata = [
     stockName: "C건설",
     startDate: "2019.01",
     description: "부채비율 높은 기업 시나리오",
+    title: "실적 발표를 만났어요",
+    locked: true,
+    unlockHint: "UNIT 2 심화 체험을 마치면 열려요",
     prices: [38000, 37500, 37800, 36900, 36000, 36500, 35200, 34800, 35500, 34000, 33200, 33800, 32500, 32000, 31500],
     companyInfo: {
       stockCode: "345678",

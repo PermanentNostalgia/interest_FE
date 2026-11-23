@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import FinancialModal from "./FinancialModal";
+import MockHeader from "./MockHeader";
 
 export default function CompanyInfo({ scenario, onBack, onViewFinancials }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,11 +14,11 @@ export default function CompanyInfo({ scenario, onBack, onViewFinancials }) {
 
   return (
     <>
-      <button className="mock-link" onClick={onBack}>
-        ← 거래 화면으로
-      </button>
-      <h1 className="mock-title">{scenario.stockName}</h1>
-      <p className="mock-subtitle">종목코드 {stockCode}</p>
+      <MockHeader
+        eyebrow={`종목코드 ${stockCode}`}
+        title={scenario.stockName}
+        onBack={onBack}
+      />
 
       <div className="mock-card">
         <p className="mock-section">투자 지표</p>
