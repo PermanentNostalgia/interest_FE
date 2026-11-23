@@ -23,3 +23,12 @@ export function authenticatedFetch(input, options = {}) {
     credentials: "omit",
   });
 }
+
+// 기록 페이지의 닉네임 표시용. 현재 로그인은 세션 토큰만 저장하므로 닉네임이 없으면 null.
+export function getAuth() {
+  try {
+    return JSON.parse(window.localStorage.getItem("wap-auth")) ?? null;
+  } catch {
+    return null;
+  }
+}

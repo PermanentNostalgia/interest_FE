@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import Login from './components/pages/login.jsx'
 import Info from './components/pages/info.jsx'
 import BeforeTuto from './components/pages/beforetuto.jsx'
@@ -6,6 +7,7 @@ import Tuto from './components/pages/tuto.jsx'
 import MainPage from './components/pages/main.jsx'
 
 function App() {
+  const navigate = useNavigate()
   const [screen, setScreen] = useState('splash')
   const [userName, setUserName] = useState('회원')
 
@@ -54,22 +56,13 @@ function App() {
   }
 
   if (screen === 'tuto') {
-    return <Tuto onContinue={() => setScreen('amain')} />
-  }
-
-  if (screen === 'amain') {
-    return (
-      <main aria-label="AMain 화면">
-        <h1>AMain</h1>
-        <p>실제 AMain 화면이 추가되면 이 위치에 연결됩니다.</p>
-      </main>
-    )
+    return <Tuto onContinue={() => navigate('/units/unit1')} />
   }
 
   return (
     <Login
       onLoginSuccess={handleLoginSuccess}
-      onSkipTutorial={() => setScreen('amain')}
+      onSkipTutorial={() => navigate('/units/unit1')}
     />
   )
 }
