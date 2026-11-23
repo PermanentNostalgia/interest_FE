@@ -20,9 +20,13 @@ const unitPageMetadata = {
         title: "UNIT 2",
         innerColor: "#A8C840",
         outterColor: "#F08080",
-        locked: true,
+        locked: false,
         chapters: [
-
+            {name: "EPS", segment: "eps"},
+            {name: "영업이익", segment: "operating-profit"},
+            {name: "채권", segment: "bond"},
+            {name: "부채비율", segment: "debt-ratio"},
+            {name: "매출액", segment: "revenue"}
         ]
     },
     unit3: {

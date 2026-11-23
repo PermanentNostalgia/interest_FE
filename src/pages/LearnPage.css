@@ -281,3 +281,17 @@ body {
 .sim-gauge-bar.alert {
   background: #e0453a;
 }
+
+/* 체험: 동전/돈다발 더미 */
+.sim-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; min-height: 34px; font-size: 22px; }
+.sim-stack-empty { font-size: 14px; opacity: 0.7; }
+
+/* 체험: 금리 시소 */
+.sim-seesaw { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; font-size: 14px; font-weight: 700; }
+.sim-seesaw-bar { flex: 1; height: 8px; border-radius: 4px; background: #8a5a2b; transition: transform 0.2s; }
+
+/* 체험: 국채/회사채 선택 */
+.sim-choices { display: flex; gap: 8px; width: 100%; }
+.sim-choice { flex: 1; padding: 8px 0; border: 2px solid transparent; border-radius: 10px; background: rgba(255, 255, 255, 0.35); font: inherit; font-weight: 700; cursor: pointer; }
+.sim-choice.selected { border-color: #333; background: rgba(255, 255, 255, 0.8); }
+.sim-footer { font-weight: 700; }
