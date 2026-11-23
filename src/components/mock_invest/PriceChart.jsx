@@ -1,18 +1,25 @@
 const WIDTH = 300;
-const HEIGHT = 100;
+const HEIGHT = 150;
 const PADDING = 8;
 
-export default function PriceChart({ prices, dayIndex }) {
-  const visiblePrices = prices.slice(0, dayIndex + 1);
+export default function PriceChart({ prices, dayIndex, step = 1 }) {
+  const lastIndex = prices.length - 1;
 
+  const indexes = [];
+  for (let index = 0; index < dayIndex; index += step) {
+    indexes.push(index);
+  }
+  indexes.push(dayIndex);
+
+  const visiblePrices = indexes.map((index) => prices[index]);
   const min = Math.min(...visiblePrices);
   const max = Math.max(...visiblePrices);
   const range = max - min || 1;
-  const lastIndex = prices.length - 1;
 
-  const points = visiblePrices.map((price, index) => {
+  const points = indexes.map((index) => {
     const x = PADDING + (index / lastIndex) * (WIDTH - PADDING * 2);
-    const y = PADDING + (1 - (price - min) / range) * (HEIGHT - PADDING * 2);
+    const y =
+      PADDING + (1 - (prices[index] - min) / range) * (HEIGHT - PADDING * 2);
     return [x, y];
   });
 
@@ -29,10 +36,11 @@ export default function PriceChart({ prices, dayIndex }) {
       <polyline
         points={linePoints}
         fill="none"
-        stroke="#3b8a6a"
+        stroke="#ff0000"
         strokeWidth="2"
+        strokeLinejoin="round"
       />
-      <circle cx={lastX} cy={lastY} r="4" fill="#3b8a6a" />
+      <circle cx={lastX} cy={lastY} r="3.5" fill="#ff0000" />
     </svg>
   );
 }

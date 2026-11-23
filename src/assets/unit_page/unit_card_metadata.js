@@ -1,34 +1,46 @@
 const unitPageMetadata = {
     unit1: {
-        previousUnit: null,
+        previousUnit: "unit3",
         nextUnit: "unit2",
         title: "UNIT 1",
-        innerColor: "#FFE600",
-        outterColor: "#27DFFF",
+        innerColor: "#E8700A",
+        outterColor: "#E8DC6E",
         locked: false,
         chapters: [
             {name: "금리", segment: "interest"},
-            {name: "채권", segment: "bond"},
-            {name: "서킷브레이커", segment: "circuit-breaker"},
             {name: "시가총액", segment: "market-cap"},
-            {name: "어닝콜", segment: "earning-call"}
+            {name: "PER", segment: "per"},
+            {name: "PBR", segment: "pbr"},
+            {name: "ROE", segment: "roe"}
         ]
     },
     unit2: {
         previousUnit: "unit1",
         nextUnit: "unit3",
         title: "UNIT 2",
-        innerColor: "#E2FFFF",
-        outterColor: "#FF9C9C",
-        locked: true
+        innerColor: "#A8C840",
+        outterColor: "#F08080",
+        locked: false,
+        requires: "unit1",
+        lockHint: "잠겨있어요",
+        chapters: [
+            {name: "EPS", segment: "eps"},
+            {name: "영업이익", segment: "operating-profit"},
+            {name: "채권", segment: "bond"},
+            {name: "부채비율", segment: "debt-ratio"},
+            {name: "매출액", segment: "revenue"}
+        ]
     },
     unit3: {
         previousUnit: "unit2",
-        nextUnit: null,
+        nextUnit: "unit1",
         title: "UNIT 3",
-        innerColor: "#E6FFE2",
-        outterColor: "#348B5C",
-        locked: true
+        innerColor: "#1F6B1F",
+        outterColor: "#7BC000",
+        locked: true,
+        chapters: [
+            
+        ]
     }
 };
 
