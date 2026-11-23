@@ -8,6 +8,7 @@ import UnitPage from "./pages/UnitPage"
 import MockInvestPage from "./pages/MockInvestPage"
 import LearnPage from "./pages/LearnPage"
 import RecordsPage from "./pages/RecordsPage"
+import UnitDetailPage from "./pages/UnitDetailPage"
 import "./styles/global.css"
 
 function LoginRoute() {
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")).render(
             <Routes>
                 <Route path="/" element={<LoginRoute />}/>
                 <Route path="units/:unitName" element={<UnitPage></UnitPage>}/>
+                <Route path="units/:unitName/terms" element={<UnitDetailPage />}/>
                 <Route path="learn/:chapterName" element={<LearnPage />}/>
                 <Route path="mock-invest" element={<MockInvestPage />} />
                 <Route path="records" element={<RecordsPage />} />

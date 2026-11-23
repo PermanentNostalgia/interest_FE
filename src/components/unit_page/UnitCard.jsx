@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router"
 
+import unitCardMetadata from "../../assets/unit_page/unit_card_metadata.js"
 import style from "../../styles/unit_page.module.css"
 
-export default function UnitCard({scrollPosition, side, rotationSpeed, rotationRatio, metadata, chapterProgress, isFront}) {
+export default function UnitCard({scrollPosition, side, rotationSpeed, rotationRatio, metadata, isFront}) {
     const navigate = useNavigate();
 
     const handleStart = () => {
-        const targetIndex =
-            chapterProgress >= metadata.chapters.length ? 0 : chapterProgress;
-        navigate(`/learn/${metadata.chapters[targetIndex].segment}`);
+        const unitKey = Object.keys(unitCardMetadata).find(key => unitCardMetadata[key] === metadata);
+        navigate(`/units/${unitKey}/terms`);
     };
 
     let rotationStartingPosition, rotationDirection;

@@ -195,3 +195,85 @@ button.unit_card_button:active {
 .unit_card:not(.front) .unit_card_button {
     opacity: 0;
 }
+
+
+/* 유닛 상세 (오늘의 용어) */
+.unit_detail_card {
+    position: absolute;
+    left: 50%;
+    top: 231px;
+    transform: translateX(-50%);
+    width: 312px;
+    height: 390px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 24px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+}
+
+.unit_detail_unit {
+    margin: 46px 0px 0px;
+    font-family: 'Pretendard';
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 14px;
+}
+
+.unit_detail_title {
+    margin: 8px 0px 0px;
+    font-family: 'Ria Sans', 'Pretendard';
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+}
+
+.unit_detail_chapters {
+    margin: 20px 0px 0px;
+    padding: 0px;
+    list-style: none;
+    text-align: center;
+
+    font-family: 'Pretendard';
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 31px;
+}
+
+.unit_detail_chapters li.dimmed {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.unit_detail_check {
+    margin-right: 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.unit_detail_progress {
+    margin: auto 0px 6px;
+    font-family: 'Pretendard';
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 10px;
+}
+
+.unit_detail_bar {
+    width: 199px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.unit_detail_bar div {
+    height: 1px;
+    background: #FFFFFF;
+}
+
+.unit_detail_card .unit_card_button {
+    position: static;
+    margin-top: 16px;
+    margin-bottom: 31px;
+}

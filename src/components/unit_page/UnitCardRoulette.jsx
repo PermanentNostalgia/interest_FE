@@ -100,7 +100,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     if(orderedUnitCardMetadata.length!=0) {
         unitCards = orderedUnitCardMetadata.map((metadata, index)=>{
             return(
-                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} rotationRatio={rotationRatio} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} chapterProgress={3} isFront={index===frontSide}/>
+                <UnitCard key={index} scrollPosition={scrollPosition} rotationSpeed={rotationSpeed} rotationRatio={rotationRatio} side={index} metadata={metadata ?? unitCardMetadata["unit1"]} isFront={index===frontSide}/>
             );
         })
     }
