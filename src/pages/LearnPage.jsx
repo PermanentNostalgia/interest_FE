@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router";
 import learnPageMetadata from "../assets/learn_page/learn_page_metadata.js";
 import BottomTab from "../components/common/BottomTab.jsx";
 import InterestSimulation from "../components/learn_page/InterestSimulation";
+import ValueSimulation from "../components/learn_page/ValueSimulation";
 import { saveTermResult } from "../utils/records";
 import "./LearnPage.css";
 
@@ -103,6 +104,10 @@ export default function LearnPage() {
             </button>
           ))}
 
+          {isAnswered && question.explanation && (
+            <p className="learn-explanation">{question.explanation}</p>
+          )}
+
           <div className="learn-action">{isAnswered && renderNextButton()}</div>
 
           <BottomTab />
@@ -115,6 +120,8 @@ export default function LearnPage() {
                 <p key={index}>{line}</p>
               ))}
             </div>
+          ) : step.simulation ? (
+            <ValueSimulation type={step.simulation} />
           ) : (
             <InterestSimulation />
           )}

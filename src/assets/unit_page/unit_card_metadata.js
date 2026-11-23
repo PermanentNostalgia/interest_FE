@@ -8,10 +8,10 @@ const unitPageMetadata = {
         locked: false,
         chapters: [
             {name: "금리", segment: "interest"},
-            {name: "채권", segment: "bond"},
-            {name: "서킷브레이커", segment: "circuit-breaker"},
             {name: "시가총액", segment: "market-cap"},
-            {name: "어닝콜", segment: "earning-call"}
+            {name: "PER", segment: "per"},
+            {name: "PBR", segment: "pbr"},
+            {name: "ROE", segment: "roe"}
         ]
     },
     unit2: {

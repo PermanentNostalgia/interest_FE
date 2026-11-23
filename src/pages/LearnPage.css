@@ -193,3 +193,19 @@ body {
   background: #ef7a6a;
   transition: width 0.2s;
 }
+
+.learn-explanation {
+  margin: 0;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sim-control {
+  width: 100%;
+}
+
+.sim-gauge-bar.alert {
+  background: #e0453a;
+}
