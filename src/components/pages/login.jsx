@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import loginMark from "../../assets/login-mark.png";
+import { saveAuth } from "../../utils/auth";
 import "./login.css";
 
 const KAKAO_STATE_KEY = "kakao_oauth_state";
@@ -113,6 +114,7 @@ export default function Login({
         return responseBody;
       })
       .then((responseBody) => {
+        saveAuth(responseBody?.data ?? responseBody);
         setStatusMessage("로그인되었습니다.");
         if (onLoginSuccess) {
           onLoginSuccess(

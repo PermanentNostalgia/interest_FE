@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import unitPageMetadata from "../assets/unit_page/unit_card_metadata.js";
 import BottomTab from "../components/common/BottomTab";
+import { getAuth } from "../utils/auth";
 import { getRecords, resetScenarioRecords, resetTermRecords } from "../utils/records";
 import "./RecordsPage.css";
 
@@ -130,6 +131,7 @@ function FreeTradeList({ records }) {
 export default function RecordsPage() {
   const [tab, setTab] = useState(0);
   const [records, setRecords] = useState(getRecords);
+  const auth = getAuth();
 
   const handleReset = (message, reset) => {
     if (!window.confirm(message)) return;
@@ -154,7 +156,10 @@ export default function RecordsPage() {
   return (
     <div className="rec-page">
       <header className="rec-header">
-        <p>내 기록</p>
+        <p>
+          내 기록
+          {auth?.nickname && <strong> {auth.nickname}</strong>}
+        </p>
         <h1>지금까지 이만큼 배웠어요</h1>
       </header>
 
