@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router";
 import learnPageMetadata from "../assets/learn_page/learn_page_metadata.js";
 import BottomTab from "../components/common/BottomTab.jsx";
 import InterestSimulation from "../components/learn_page/InterestSimulation";
+import { saveTermResult } from "../utils/records";
 import "./LearnPage.css";
 
 export default function LearnPage() {
@@ -13,6 +14,7 @@ export default function LearnPage() {
   const [stepIndex, setStepIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [hasWrongAnswer, setHasWrongAnswer] = useState(false);
 
   if (!chapter) {
     return <h1>'{chapterName}'라는 이름의 챕터는 존재하지 않습니다.</h1>;
@@ -32,6 +34,7 @@ export default function LearnPage() {
     setStepIndex(index);
     setQuestionIndex(0);
     setSelectedIndex(null);
+    setHasWrongAnswer(false);
   };
 
   const handleNext = () => {
@@ -46,6 +49,10 @@ export default function LearnPage() {
   const handleSelect = (index) => {
     if (isAnswered) return;
     setSelectedIndex(index);
+
+    const isWrong = hasWrongAnswer || index !== question.answerIndex;
+    setHasWrongAnswer(isWrong);
+    if (isLastQuestion) saveTermResult(chapterName, !isWrong);
   };
 
   const getOptionClass = (index) => {

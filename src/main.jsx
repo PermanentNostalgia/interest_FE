@@ -7,6 +7,7 @@ import Login from "./components/pages/login"
 import UnitPage from "./pages/UnitPage"
 import MockInvestPage from "./pages/MockInvestPage"
 import LearnPage from "./pages/LearnPage"
+import RecordsPage from "./pages/RecordsPage"
 import "./styles/global.css"
 
 function LoginRoute() {
@@ -22,6 +23,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="units/:unitName" element={<UnitPage></UnitPage>}/>
                 <Route path="learn/:chapterName" element={<LearnPage />}/>
                 <Route path="mock-invest" element={<MockInvestPage />} />
+                <Route path="records" element={<RecordsPage />} />
             </Routes>
         </BrowserRouter>
     </StrictMode>
