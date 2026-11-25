@@ -4,7 +4,7 @@ import Login from './components/pages/login.jsx'
 import Info from './components/pages/info.jsx'
 import BeforeTuto from './components/pages/beforetuto.jsx'
 import Tuto from './components/pages/tuto.jsx'
-import MainPage from './components/pages/f_main.jsx'
+import MainPage from './components/pages/main.jsx'
 
 function App() {
   const navigate = useNavigate()

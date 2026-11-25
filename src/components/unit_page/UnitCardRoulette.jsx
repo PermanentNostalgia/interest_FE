@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import UnitCard from "./UnitCard"
 
 import unitCardMetadata from "../../assets/unit_page/unit_card_metadata.js"
+import { getSessionToken } from "../../utils/auth.js"
 
 import style from "../../styles/unit_page.module.css"
 
@@ -16,6 +17,14 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const animationTimer = useRef();
 
     useEffect(()=>{
+        fetch("http://165.101.61.221:45240/api/users/me", {
+            method: "GET",
+            header: {"Authorization": `Bearer ${getSessionToken()}`}
+        }).then((response)=>{
+            console.log(response.json())
+        }).catch((error)=>{
+            console.log(error.json());
+        });
         const newMetadata = [];
         newMetadata[0] = unitCardMetadata[unitName] ?? unitCardMetadata["unit1"];
         newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
