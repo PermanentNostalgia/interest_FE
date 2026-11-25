@@ -17,12 +17,12 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const animationTimer = useRef();
 
     useEffect(()=>{
-        console.log(getSessionToken());
         fetch("/api/users/me", {
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
             const progressData = response.json();
+            console.log(progressData);
 
             const newMetadata = [];
             newMetadata[0] = unitCardMetadata["unit1"];
