@@ -17,7 +17,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const animationTimer = useRef();
 
     useEffect(()=>{
-        fetch("http://165.101.61.221:45240/api/users/me", {
+        fetch("https://165.101.61.221:45240/api/users/me", {
             method: "GET",
             header: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
@@ -29,7 +29,6 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         newMetadata[0] = unitCardMetadata[unitName] ?? unitCardMetadata["unit1"];
         newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
         newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
-        console.log(newMetadata);
 
         setOrderedUnitCardMetadata(newMetadata);
     },[]);
@@ -86,7 +85,6 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         let newScrollPosition = scrollPosition + (newMousePositionX - mousePositionX);
         
         setScrollPosition(newScrollPosition);
-        console.log(newScrollPosition);
 
         setMousePositionX(newMousePositionX);
     }, [dragging, scrollPosition, mousePositionX]);
