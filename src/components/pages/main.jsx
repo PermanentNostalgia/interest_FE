@@ -1,5 +1,5 @@
 import GradientBackground from "./gradient-background.jsx";
-import "./f_main.css";
+import "./main.css";
 
 export default function MainPage() {
   return (
