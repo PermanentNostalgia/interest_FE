@@ -3,6 +3,7 @@ const learnPageMetadata = {
     title: "금리",
     subtitle: "돈에 붙는 이자의 비율",
     unit: "unit1",
+    chapter: 0,
     steps: [
       {
         type: "explain",
@@ -56,6 +57,7 @@ const learnPageMetadata = {
     title: "시가총액",
     subtitle: "회사를 통째로 사는 데 필요한 가격",
     unit: "unit1",
+    chapter: 1,
     steps: [
       {
         type: "explain",
@@ -117,6 +119,7 @@ const learnPageMetadata = {
     title: "PER",
     subtitle: "본전을 뽑는 데 걸리는 햇수",
     unit: "unit1",
+    chapter: 2,
     steps: [
       {
         type: "explain",
@@ -172,6 +175,7 @@ const learnPageMetadata = {
     title: "PBR",
     subtitle: "회사 재산에 비해 주가가 어떤지",
     unit: "unit1",
+    chapter: 3,
     steps: [
       {
         type: "explain",
@@ -227,6 +231,7 @@ const learnPageMetadata = {
     title: "ROE",
     subtitle: "내 밑천으로 번 돈의 비율",
     unit: "unit1",
+    chapter: 4,
     steps: [
       {
         type: "explain",
@@ -283,6 +288,7 @@ const learnPageMetadata = {
     title: "EPS",
     subtitle: "주식 1주가 1년 동안 벌어온 돈",
     unit: "unit2",
+    chapter: 0,
     steps: [
       {
         type: "explain",
@@ -344,6 +350,7 @@ const learnPageMetadata = {
     title: "영업이익",
     subtitle: "본업(장사)으로 실제로 남긴 돈",
     unit: "unit2",
+    chapter: 1,
     steps: [
       {
         type: "explain",
@@ -405,6 +412,7 @@ const learnPageMetadata = {
     title: "채권",
     subtitle: "돈을 빌려주고 받는 차용증",
     unit: "unit2",
+    chapter: 2,
     steps: [
       {
         type: "explain",
@@ -466,6 +474,7 @@ const learnPageMetadata = {
     title: "부채비율",
     subtitle: "내 재산에 비해 빚이 얼마나 많은가",
     unit: "unit2",
+    chapter: 3,
     steps: [
       {
         type: "explain",
@@ -526,6 +535,7 @@ const learnPageMetadata = {
     title: "매출액",
     subtitle: "장사해서 물건을 팔고 받은 돈 전부",
     unit: "unit2",
+    chapter: 4,
     steps: [
       {
         type: "explain",
