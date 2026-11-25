@@ -23,7 +23,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         }).then((response)=>{
             console.log(response.json())
         }).catch((error)=>{
-            console.log(error.json());
+            console.log(error);
         });
         const newMetadata = [];
         newMetadata[0] = unitCardMetadata[unitName] ?? unitCardMetadata["unit1"];
