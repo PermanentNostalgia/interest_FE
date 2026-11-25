@@ -1,3 +1,5 @@
+import { getSessionToken } from "./auth.js";
+
 // 내 기록은 서버가 준비되기 전까지 브라우저(localStorage)에 저장해요
 const STORAGE_KEY = "wap-records";
 const MAX_FREE_TRADES = 50;
@@ -7,6 +9,7 @@ const emptyRecords = () => ({ terms: {}, scenarios: {}, freeTrades: [] });
 function load() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
+    console.log(saved);
     return saved ? { ...emptyRecords(), ...JSON.parse(saved) } : emptyRecords();
   } catch {
     return emptyRecords();

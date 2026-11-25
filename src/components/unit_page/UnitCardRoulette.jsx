@@ -21,7 +21,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
-            const progressData = response.json();
+            const progressData = response.json().chap1;
             console.log(progressData);
 
             const newMetadata = [];
@@ -29,18 +29,29 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
             newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
             newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
 
-            if(!progressData.unit1) {
-                newMetadata[0].locked = false;
+            let unit1ClearedChapterCount=0, unit2ClearedChapterCount=0, unit3ClearedChapterCount=0;
+            for(const chapter of progressData[0]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit1ClearedChapterCount++;
+                }
+            }
+            for(const chapter of progressData[1]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit2ClearedChapterCount++;
+                }
+            }
+            for(const chapter of progressData[2]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit3ClearedChapterCount++;
+                }
+            }
+            console.log(`unit1: ${unit1ClearedChapterCount} unit2: ${unit2ClearedChapterCount} unit3: ${unit3ClearedChapterCount}`)
+
+            if(unit1ClearedChapterCount!=5) {
                 newMetadata[1].locked = true;
                 newMetadata[2].locked = true;
-            } else if(!progressData.unit2) {
-                newMetadata[0].locked = false;
-                newMetadata[1].locked = false;
+            } else if(unit2ClearedChapterCount!=5) {
                 newMetadata[2].locked = true;
-            } else {
-                newMetadata[0].locked = false;
-                newMetadata[1].locked = false;
-                newMetadata[2].locked = false;
             }
 
             setOrderedUnitCardMetadata(newMetadata);
