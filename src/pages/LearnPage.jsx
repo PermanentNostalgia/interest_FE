@@ -8,7 +8,7 @@ import ValueSimulation from "../components/learn_page/ValueSimulation";
 import { saveTermResult } from "../utils/records";
 import "./LearnPage.css";
 
-import { getSessionToken } from "../../utils/auth.js";
+import { getSessionToken } from "../utils/auth.js";
 
 const RESULT_DELAY_MS = 600; // 답을 고르고 결과 카드가 나오기까지 걸리는 시간
 const DONE_DELAY_MS = 2500; // 학습 완료 화면이 머무는 시간
