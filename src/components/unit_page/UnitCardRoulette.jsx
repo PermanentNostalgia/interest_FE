@@ -17,6 +17,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const animationTimer = useRef();
 
     useEffect(()=>{
+        console.log(getSessionToken());
         fetch("/api/users/me", {
             method: "GET",
             header: {"Authorization": `Bearer ${getSessionToken()}`}
