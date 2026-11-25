@@ -17,47 +17,47 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
     const animationTimer = useRef();
 
     useEffect(()=>{
-        const progress = fetch("/api/users/me", {
+        fetch("/api/users/me", {
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
-        }).then((response)=>console.log(response)
-        ).catch((error)=>{
+        }).then((response)=>{
+            const progressData = response.json();
+            console.log("asdf", progressData);
+
+            const newMetadata = [];
+            newMetadata[0] = unitCardMetadata["unit1"];
+            newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
+            newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
+
+            let unit1ClearedChapterCount=0, unit2ClearedChapterCount=0, unit3ClearedChapterCount=0;
+            for(const chapter of progressData[0]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit1ClearedChapterCount++;
+                }
+            }
+            for(const chapter of progressData[1]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit2ClearedChapterCount++;
+                }
+            }
+            for(const chapter of progressData[2]) {
+                if(0<=chapter.progress<5 && chapter.isCleared) {
+                    unit3ClearedChapterCount++;
+                }
+            }
+            console.log(`unit1: ${unit1ClearedChapterCount} unit2: ${unit2ClearedChapterCount} unit3: ${unit3ClearedChapterCount}`)
+
+            if(unit1ClearedChapterCount!=5) {
+                newMetadata[1].locked = true;
+                newMetadata[2].locked = true;
+            } else if(unit2ClearedChapterCount!=5) {
+                newMetadata[2].locked = true;
+            }
+
+            setOrderedUnitCardMetadata(newMetadata);
+        }).catch((error)=>{
             console.log(error);
         });
-
-        console.log(progress);
-
-        const newMetadata = [];
-        newMetadata[0] = unitCardMetadata["unit1"];
-        newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
-        newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
-
-        let unit1ClearedChapterCount=0, unit2ClearedChapterCount=0, unit3ClearedChapterCount=0;
-        for(const chapter of progress.chap1[0]) {
-            if(0<=chapter.progress<5 && chapter.isCleared) {
-                unit1ClearedChapterCount++;
-            }
-        }
-        for(const chapter of progress.chap1[1]) {
-            if(0<=chapter.progress<5 && chapter.isCleared) {
-                unit2ClearedChapterCount++;
-            }
-        }
-        for(const chapter of progress.chap1[2]) {
-            if(0<=chapter.progress<5 && chapter.isCleared) {
-                unit3ClearedChapterCount++;
-            }
-        }
-        console.log(`unit1: ${unit1ClearedChapterCount} unit2: ${unit2ClearedChapterCount} unit3: ${unit3ClearedChapterCount}`)
-
-        if(unit1ClearedChapterCount!=5) {
-            newMetadata[1].locked = true;
-            newMetadata[2].locked = true;
-        } else if(unit2ClearedChapterCount!=5) {
-            newMetadata[2].locked = true;
-        }
-
-        setOrderedUnitCardMetadata(newMetadata);
     },[]);
 
     const animateCardReturning = useCallback(() => {
