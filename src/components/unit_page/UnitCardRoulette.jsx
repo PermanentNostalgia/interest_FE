@@ -20,7 +20,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         const progress = fetch("/api/users/me", {
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
-        }).then((response)=> response.json()
+        }).then((response)=>console.log(response)
         ).catch((error)=>{
             console.log(error);
         });
