@@ -50,7 +50,7 @@ function LearnContent({ chapterName }) {
         method: "PATCH",
         headers: {"Authorization": `Bearer ${getSessionToken()}`, "Content-Type": "application/json"},
         body: JSON.stringify({
-          progress: 77,
+          progress: chapter.chapter,
           isCleared: true
         })
       }).catch((error)=>{
