@@ -22,16 +22,31 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
-            console.log(response.json())
+            const progressData = response.json();
+
+            const newMetadata = [];
+            newMetadata[0] = unitCardMetadata["unit1"];
+            newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
+            newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
+
+            if(!progressData.unit1) {
+                newMetadata[0].locked = false;
+                newMetadata[1].locked = true;
+                newMetadata[2].locked = true;
+            } else if(!progressData.unit2) {
+                newMetadata[0].locked = false;
+                newMetadata[1].locked = false;
+                newMetadata[2].locked = true;
+            } else {
+                newMetadata[0].locked = false;
+                newMetadata[1].locked = false;
+                newMetadata[2].locked = false;
+            }
+
+            setOrderedUnitCardMetadata(newMetadata);
         }).catch((error)=>{
             console.log(error);
         });
-        const newMetadata = [];
-        newMetadata[0] = unitCardMetadata[unitName] ?? unitCardMetadata["unit1"];
-        newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
-        newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
-
-        setOrderedUnitCardMetadata(newMetadata);
     },[]);
 
     const animateCardReturning = useCallback(() => {

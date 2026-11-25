@@ -37,7 +37,7 @@ const unitPageMetadata = {
         title: "UNIT 3",
         innerColor: "#1F6B1F",
         outterColor: "#7BC000",
-        locked: true,
+        locked: false,
         chapters: [
             
         ]
