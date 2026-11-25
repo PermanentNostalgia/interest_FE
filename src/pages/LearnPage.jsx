@@ -42,6 +42,8 @@ function LearnContent({ chapterName }) {
 
   useEffect(() => {
     if (!isDone) return;
+    console.log(correctAnswerCounter.current);
+    console.log(quizCounter.current);
 
     if(correctAnswerCounter.current==quizCounter.current) {
       fetch("/api/users/me/chap67/33dd",{
