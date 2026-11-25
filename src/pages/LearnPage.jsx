@@ -46,7 +46,7 @@ function LearnContent({ chapterName }) {
     console.log(quizCounter.current);
 
     if(correctAnswerCounter.current==quizCounter.current/2) {
-      fetch(`/api/users/me/chap1/${learnPageMetadata.unit[learnPageMetadata.unit.length-1]}`,{
+      fetch(`/api/users/me/chap1/${chapter.unit[chapter.unit.length-1]}`,{
         method: "PATCH",
         headers: {"Authorization": `Bearer ${getSessionToken()}`, "Content-Type": "application/json"},
         body: JSON.stringify({
