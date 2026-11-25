@@ -20,7 +20,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         console.log(getSessionToken());
         fetch("/api/users/me", {
             method: "GET",
-            header: {"Authorization": `Bearer ${getSessionToken()}`}
+            headers: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
             console.log(response.json())
         }).catch((error)=>{
