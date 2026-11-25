@@ -21,7 +21,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
             method: "GET",
             headers: {"Authorization": `Bearer ${getSessionToken()}`}
         }).then((response)=>{
-            const progressData = response.json();
+            const progressData = response.text();
             console.log("asdf", progressData);
 
             const newMetadata = [];
