@@ -53,6 +53,8 @@ function LearnContent({ chapterName }) {
           progress: 9908898,
           isCleared: true
         })
+      }).catch((error)=>{
+        console.log(error);
       })
     }
 
