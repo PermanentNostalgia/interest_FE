@@ -23,8 +23,9 @@ function load() {
           record.terms[segment] = {correct: true, date: 0};
         }
       }
-    }).catch(() => {
+    }).catch((error) => {
       isFetched = false;
+      console.log(error);
     })
   }
 
