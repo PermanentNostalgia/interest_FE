@@ -16,13 +16,15 @@ function load() {
       headers: {"Authorization": `Bearer ${getSessionToken()}`}
     }).then(response => response.json()
     ).then(progressData => {
-      const record = emptyRecords();
+      console.log(progressData);
       for(const chapter of progressData.chap1) {
         if(1<=chapter.id && chapter.id<=3 && 0<=chapter.progress && chapter.progress<5) {
           const segment = SEGMENT_MATRIX[chapter.id-1][chapter.progress];
           record.terms[segment] = {correct: true, date: 0};
         }
       }
+
+      return record;
     }).catch(() => {
       isFetched = false;
     })
