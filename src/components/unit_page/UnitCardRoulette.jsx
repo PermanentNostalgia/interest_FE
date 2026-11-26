@@ -21,12 +21,13 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         const newMetadata = [];
         const progressData = getRecords();
         let clearedChapterCounts = [0, 0, 0];
+        console.log(progressData);
         
         newMetadata[0] = unitCardMetadata["unit1"];
         newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
         newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
 
-        for(const chapter of progressData.chap1) {
+        for(const chapter of progressData.terms) {
             if(1<=chapter.id && chapter.id<=3 && 0<=chapter.progress && chapter.progress<5 && chapter.isCleared) {
                 clearedChapterCounts[chapter.id-1]++;
             }
