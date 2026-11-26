@@ -3,16 +3,38 @@ import { getSessionToken } from "./auth.js";
 // 내 기록은 서버가 준비되기 전까지 브라우저(localStorage)에 저장해요
 const STORAGE_KEY = "wap-records";
 const MAX_FREE_TRADES = 50;
+const SEGMENT_MATRIX = [["interest","market-cap","per","pbr","roe"],
+             ["eps","operating-profit","bond","debt-ratio","revenue"]]
 
 const emptyRecords = () => ({ terms: {}, scenarios: {}, freeTrades: [] });
 
 function load() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    console.log(saved);
-    return saved ? { ...emptyRecords(), ...JSON.parse(saved) } : emptyRecords();
-  } catch {
-    return emptyRecords();
+  let isFetched = true;
+  if(getSessionToken()!=null) {
+    fetch("/api/users/me",{
+      method: "GET",
+      headers: {"Authorization": `Bearer ${getSessionToken()}`}
+    }).then(response => response.json()
+    ).then(progressData => {
+      const record = emptyRecords();
+      for(const chapter of progressData.chap1) {
+        if(1<=chapter.id && chapter.id<=3 && 0<=chapter.progress && chapter.progress<5) {
+          const segment = SEGMENT_MATRIX[chapter.id-1][chapter.progress];
+          record.terms[segment] = {correct: true, date: 0};
+        }
+      }
+    }).catch(() => {
+      isFetched = false;
+    })
+  }
+
+  if(!isFetched) {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? { ...emptyRecords(), ...JSON.parse(saved) } : emptyRecords();
+    } catch {
+      return emptyRecords();
+    }
   }
 }
 
@@ -30,6 +52,25 @@ export function getRecords() {
 
 // 용어(챕터) 퀴즈를 모두 맞혔는지 저장해요
 export function saveTermResult(chapterName, correct) {
+  if(getSessionToken()!=null) {
+    let id = 1, progress = 0;
+    for(;id<=SEGMENT_MATRIX.length;id++) {
+      for(;progress<5; progress++) {
+        if(SEGMENT_MATRIX[id][progress]==chapterName) break;
+      }
+    }
+    fetch(`/api/users/me/chap1/${id}`,{
+      method: "PATCH",
+      headers: {"Authorization": `Bearer ${getSessionToken()}`},
+      body: JSON.stringify({
+        "progress": progress,
+        isCleared: true 
+      })
+    })
+
+    return;
+  }
+
   const records = load();
   records.terms[chapterName] = { correct, date: Date.now() };
   save(records);
