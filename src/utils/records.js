@@ -10,21 +10,19 @@ const emptyRecords = () => ({ terms: {}, scenarios: {}, freeTrades: [] });
 
 function load() {
   let isFetched = true;
+  const record = emptyRecords();
   if(getSessionToken()!=null) {
     fetch("/api/users/me",{
       method: "GET",
       headers: {"Authorization": `Bearer ${getSessionToken()}`}
     }).then(response => response.json()
     ).then(progressData => {
-      const record = emptyRecords();
       for(const chapter of progressData.chap1) {
         if(1<=chapter.id && chapter.id<=3 && 0<=chapter.progress && chapter.progress<5) {
           const segment = SEGMENT_MATRIX[chapter.id-1][chapter.progress];
           record.terms[segment] = {correct: true, date: 0};
         }
       }
-
-      return record;
     }).catch(() => {
       isFetched = false;
     })
@@ -37,6 +35,8 @@ function load() {
     } catch {
       return emptyRecords();
     }
+  } else {
+    return record;
   }
 }
 
