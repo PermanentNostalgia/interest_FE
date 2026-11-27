@@ -60,7 +60,7 @@ export function saveTermResult(chapterName, correct) {
     let id = 1, progress = 0;
     for(;id<=SEGMENT_MATRIX.length;id++) {
       for(;progress<5; progress++) {
-        if(SEGMENT_MATRIX[id][progress]==chapterName) break;
+        if(SEGMENT_MATRIX[id-1][progress]==chapterName) break;
       }
     }
     fetch(`/api/users/me/chap1/${id}`,{
