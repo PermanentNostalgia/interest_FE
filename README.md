@@ -2,6 +2,10 @@
 
 > 배우고, 써먹고. 금융 용어를 배우고 모의투자로 연습하는 모바일 웹 서비스
 
+### 🔗 [https://interest-fe-three.vercel.app](https://interest-fe-three.vercel.app/)
+
+설치 없이 위 주소로 접속한 뒤 **로그인 없이 둘러보기**를 누르면 바로 UNIT 1부터 시작할 수 있어요.
+
 **금리도 모르면서**는 금융과 투자가 처음인 사람을 위한 학습 서비스입니다.
 용어를 짧게 배우고, 직접 조작해 보고, OX 퀴즈로 확인한 다음, 모의투자에서 배운 지표를 실제 판단에 써 봅니다.
 이 저장소는 프론트엔드 코드를 담고 있습니다.
@@ -52,6 +56,8 @@
 
 ## 🚀 시작하기
 
+서비스를 사용만 한다면 <https://interest-fe-three.vercel.app/> 에 접속하면 돼요. 아래는 로컬에서 개발할 때의 실행 방법이에요.
+
 저장소를 내려받아요.
 
 ```bash
@@ -84,7 +90,7 @@ npm run dev
 | `VITE_API_BASE_URL` | 백엔드 API 주소. 배포 환경에서는 비워 두고 `vercel.json`의 rewrites를 사용해요. | `http://localhost:45240` |
 | `VITE_KAKAO_LOGIN_ENDPOINT` | (선택) 로그인 API가 다른 서버에 있을 때 지정해요. 이 주소의 origin으로 `/api` 요청을 프록시해요. | 없음 |
 
-카카오 로그인의 Redirect URI는 접속한 주소를 그대로 사용해요. 로컬에서 테스트하려면 카카오 개발자 콘솔에 `http://localhost:5173/`이 등록되어 있어야 해요.
+카카오 로그인의 Redirect URI는 접속한 주소를 그대로 사용해요. 카카오 개발자 콘솔에 배포 주소 `https://interest-fe-three.vercel.app/`와 로컬 주소 `http://localhost:5173/`이 등록되어 있어야 해요.
 
 ### 스크립트
 
