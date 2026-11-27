@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
+import { fetchSimulationResults } from "../api/mockInvestApi";
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import unitPageMetadata from "../assets/unit_page/unit_card_metadata.js";
 import BottomTab from "../components/common/BottomTab";
-import { getAuth } from "../utils/auth";
-import { getRecords, resetScenarioRecords, resetTermRecords } from "../utils/records";
+import { getAuth, getSessionToken } from "../utils/auth";
+import {
+  getRecords,
+  mergeFreeTrades,
+  resetScenarioRecords,
+  resetTermRecords,
+} from "../utils/records";
 import "./RecordsPage.css";
 
 const TABS = ["유닛", "시나리오", "자유투자"];
@@ -131,7 +137,28 @@ function FreeTradeList({ records }) {
 export default function RecordsPage() {
   const [tab, setTab] = useState(0);
   const [records, setRecords] = useState(getRecords);
+  const [serverResults, setServerResults] = useState([]);
+  const [loadFailed, setLoadFailed] = useState(false);
   const auth = getAuth();
+  const freeTrades = mergeFreeTrades(records.freeTrades, serverResults);
+
+  useEffect(() => {
+    // 서버 기록은 로그인 상태에서만 조회
+    if (!getSessionToken()) return;
+    let ignore = false;
+
+    fetchSimulationResults()
+      .then((results) => {
+        if (!ignore) setServerResults(results);
+      })
+      .catch(() => {
+        if (!ignore) setLoadFailed(true);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const handleReset = (message, reset) => {
     if (!window.confirm(message)) return;
@@ -150,7 +177,7 @@ export default function RecordsPage() {
   const summary = [
     { label: "유닛", count: startedUnits },
     { label: "시나리오", count: doneScenarios },
-    { label: "자유투자", count: records.freeTrades.length },
+    { label: "자유투자", count: freeTrades.length },
   ];
 
   return (
@@ -215,7 +242,16 @@ export default function RecordsPage() {
           </button>
         </>
       )}
-      {tab === 2 && <FreeTradeList records={records} />}
+      {tab === 2 && (
+        <>
+          {loadFailed && (
+            <p className="rec-empty">
+              서버 기록을 불러오지 못해서 이 브라우저의 기록만 보여줘요
+            </p>
+          )}
+          <FreeTradeList records={{ ...records, freeTrades }} />
+        </>
+      )}
 
       <BottomTab />
     </div>

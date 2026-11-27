@@ -24,11 +24,11 @@ export default function CompanyInfo({ scenario, onBack, onViewFinancials }) {
         <p className="mock-section">투자 지표</p>
         <div className="mock-info-row">
           <span>시가총액</span>
-          <span>{marketCap}</span>
+          <span>{marketCap ?? "-"}</span>
         </div>
         <div className="mock-info-row">
           <span>ROE</span>
-          <span>{roe}</span>
+          <span>{roe ?? "-"}</span>
         </div>
       </div>
 
@@ -36,11 +36,11 @@ export default function CompanyInfo({ scenario, onBack, onViewFinancials }) {
         <p className="mock-section">가치평가 지표</p>
         <div className="mock-info-row">
           <span>PER</span>
-          <span>{per}</span>
+          <span>{per ?? "-"}</span>
         </div>
         <div className="mock-info-row">
           <span>PBR</span>
-          <span>{pbr}</span>
+          <span>{pbr ?? "-"}</span>
         </div>
       </div>
 

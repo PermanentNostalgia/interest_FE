@@ -1,5 +1,7 @@
 export default function FinancialModal({ stockName, companyInfo, onClose }) {
-  const { financials, per } = companyInfo;
+  const { per } = companyInfo;
+  // 임의 데이터는 재무 정보 없음
+  const financials = companyInfo.financials ?? {};
 
   return (
     <div className="mock-overlay">
@@ -7,19 +9,19 @@ export default function FinancialModal({ stockName, companyInfo, onClose }) {
         <h3>{stockName} · 재무제표 요약</h3>
         <div className="mock-info-row">
           <span>매출액</span>
-          <span>{financials.revenue}</span>
+          <span>{financials.revenue ?? "-"}</span>
         </div>
         <div className="mock-info-row">
           <span>영업이익</span>
-          <span>{financials.operatingProfit}</span>
+          <span>{financials.operatingProfit ?? "-"}</span>
         </div>
         <div className="mock-info-row">
           <span>부채비율</span>
-          <span>{financials.debtRatio}</span>
+          <span>{financials.debtRatio ?? "-"}</span>
         </div>
         <div className="mock-info-row">
           <span>PER</span>
-          <span>{per}</span>
+          <span>{per ?? "-"}</span>
         </div>
         <button className="mock-btn primary" onClick={onClose}>
           닫기

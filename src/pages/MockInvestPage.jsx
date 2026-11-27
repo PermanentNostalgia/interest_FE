@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { saveSimulationResult } from "../api/mockInvestApi";
 import scenarioMetadata from "../assets/mock_invest/scenario_metadata.js";
 import BottomTab from "../components/common/BottomTab";
 import FreeSetup from "../components/mock_invest/FreeSetup";
@@ -9,7 +10,8 @@ import ScenarioCard from "../components/mock_invest/ScenarioCard";
 import ScenarioIntro from "../components/mock_invest/ScenarioIntro";
 import TradeMain from "../components/mock_invest/TradeMain";
 import TradeResult from "../components/mock_invest/TradeResult";
-import { saveMockResult } from "../utils/records";
+import { getSessionToken } from "../utils/auth";
+import { makeFreePayload, saveMockResult } from "../utils/records";
 import "./MockInvestPage.css";
 
 export default function MockInvestPage() {
@@ -17,6 +19,7 @@ export default function MockInvestPage() {
   const [selectedScenario, setSelectedScenario] = useState(null);
   const [freeSetup, setFreeSetup] = useState(null);
   const [result, setResult] = useState(null);
+  const [saveFailed, setSaveFailed] = useState(false);
 
   // 시나리오 모드: 기존 임시 데이터(scenario_metadata.js) 사용
   const handleSelectScenario = (scenario) => {
@@ -26,16 +29,17 @@ export default function MockInvestPage() {
 
   // 자유 투자 모드: 정한 조건 + 고른 종목으로 거래 화면에 넘길 데이터를 만들어요
   const handleSelectStock = (stock) => {
-    const startIndex = Math.max(0, stock.dates.length - freeSetup.offset);
-    const endIndex = Math.min(stock.dates.length, startIndex + freeSetup.days);
-    const dates = stock.dates.slice(startIndex, endIndex);
+    // 시세가 선택한 기간보다 짧으면 있는 만큼만 사용
+    const startIndex = Math.max(0, stock.prices.length - freeSetup.offset);
+    const endIndex = startIndex + freeSetup.days;
     const prices = stock.prices.slice(startIndex, endIndex);
+    // 날짜는 임의 데이터에만 있음
+    const dates = stock.dates?.slice(startIndex, endIndex);
 
     setSelectedScenario({
-      id: `free-${stock.stockCode}`,
+      id: `free-${stock.companyInfo.stockCode}`,
       mode: "free",
       stockName: stock.stockName,
-      startDate: dates[0],
       startCash: freeSetup.cash,
       dates,
       prices,
@@ -45,9 +49,17 @@ export default function MockInvestPage() {
   };
 
   const handleFinish = (tradeResult) => {
-    saveMockResult(selectedScenario, tradeResult);
+    const playedAt = Date.now();
+    saveMockResult(selectedScenario, tradeResult, playedAt);
     setResult(tradeResult);
+    setSaveFailed(false);
     setStep("result");
+
+    // 서버 저장은 로그인 상태의 자유 투자만
+    if (selectedScenario.mode === "free" && getSessionToken()) {
+      const payload = makeFreePayload(selectedScenario, tradeResult, playedAt);
+      saveSimulationResult(payload).catch(() => setSaveFailed(true));
+    }
   };
 
   const handleBackFromTrade = () => {
@@ -66,11 +78,18 @@ export default function MockInvestPage() {
     );
   } else if (step === "result") {
     content = (
-      <TradeResult
-        scenario={selectedScenario}
-        result={result}
-        onRetry={() => setStep("mode")}
-      />
+      <>
+        <TradeResult
+          scenario={selectedScenario}
+          result={result}
+          onRetry={() => setStep("mode")}
+        />
+        {saveFailed && (
+          <p className="mock-notice">
+            서버에 저장하지 못해서 이 브라우저에만 기록했어요
+          </p>
+        )}
+      </>
     );
   } else if (step === "select") {
     content = (
