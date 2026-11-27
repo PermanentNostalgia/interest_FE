@@ -26,7 +26,9 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
         newMetadata[1] = unitCardMetadata[newMetadata[0].previousUnit];
 
-        for(const chapter of progressData.terms) {
+        const chapterProgress = Object.keys(progressData.terms);
+        for(const chapterName of chapterProgress) {
+            const chapter = chapterProgress[chapterName];
             if(1<=chapter.id && chapter.id<=3 && 0<=chapter.progress && chapter.progress<5 && chapter.isCleared) {
                 clearedChapterCounts[chapter.id-1]++;
             }
