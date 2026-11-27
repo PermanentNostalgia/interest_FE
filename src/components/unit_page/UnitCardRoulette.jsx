@@ -22,7 +22,7 @@ export default function UnitCardRoulette({unitName, rotationSpeed=6, rotationRat
         const progressData = getRecords();
         let clearedChapterCounts = [0, 0, 0];
 
-        console.log("getRecords = " + getRecords());
+        console.log("getRecords = ", getRecords());
         
         newMetadata[0] = unitCardMetadata["unit1"];
         newMetadata[2] = unitCardMetadata[newMetadata[0].nextUnit];
