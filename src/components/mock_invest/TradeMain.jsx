@@ -254,31 +254,10 @@ export default function TradeMain({ scenario, onBack, onFinish }) {
               <input
                 type="number"
                 min="1"
+                aria-label="거래 수량"
                 value={tradeQuantity}
                 onChange={handleQuantityChange}
               />
-              <span className="mock-spinner">
-                <button
-                  type="button"
-                  aria-label="늘리기"
-                  onClick={() => setTradeQuantity(tradeQuantity + 1)}
-                >
-                  <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
-                    <path d="M5 0l5 6H0z" fill="currentColor" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  aria-label="줄이기"
-                  onClick={() =>
-                    setTradeQuantity(Math.max(1, tradeQuantity - 1))
-                  }
-                >
-                  <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
-                    <path d="M5 6L0 0h10z" fill="currentColor" />
-                  </svg>
-                </button>
-              </span>
             </span>
             <button onClick={() => setTradeQuantity(tradeQuantity + 1)}>
               +

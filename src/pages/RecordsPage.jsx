@@ -62,7 +62,7 @@ function UnitList({ units, records }) {
           const isCorrect = records.terms[chapter.segment]?.correct;
 
           return (
-            <div key={chapter.segment} className="rec-row">
+            <div key={chapter.segment} className="rec-row" tabIndex={0}>
               <span className="rec-name">{chapter.name}</span>
               {isCorrect ? (
                 <span className="rec-badge correct">정답</span>
@@ -94,7 +94,7 @@ function ScenarioList({ records }) {
   return done.map(({ scenario, index }) => (
     <section key={scenario.id} className="rec-section">
       <h2>시나리오 {index + 1}</h2>
-      <div className="rec-row rec-row--tall">
+      <div className="rec-row rec-row--tall" tabIndex={0}>
         <div>
           <p className="rec-name">{scenario.title ?? scenario.stockName}</p>
           {scenario.topic && <p className="rec-sub">{scenario.topic}</p>}
@@ -116,7 +116,7 @@ function FreeTradeList({ records }) {
     <section className="rec-section">
       <h2>최근 거래</h2>
       {records.freeTrades.map((trade) => (
-        <div key={trade.date} className="rec-row rec-row--tall">
+        <div key={trade.date} className="rec-row rec-row--tall" tabIndex={0}>
           <div>
             <p className="rec-name">{trade.stockName}</p>
             <p className="rec-sub">{tradeSummary(trade)}</p>

@@ -196,7 +196,7 @@
   background: rgba(255, 255, 255, 0.92);
 }
 
-/* 흰색 큰 버튼 */
+/* 큰 버튼 */
 .mock-cta {
   box-sizing: border-box;
   width: 100%;
@@ -204,10 +204,10 @@
   font-family: "Ria Sans", Pretendard, sans-serif;
   font-size: 16px;
   font-weight: 700;
-  color: var(--mock-navy);
-  background: var(--mock-white);
-  border: none;
+  background: var(--mock-glass);
+  border: 1px solid var(--mock-glass-border);
   border-radius: 999px;
+  backdrop-filter: blur(10px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   cursor: pointer;
 }
@@ -302,7 +302,6 @@
 
 .mock-situation h2 {
   margin-bottom: 18px;
-  color: var(--mock-navy);
 }
 
 .mock-situation p {
@@ -427,7 +426,7 @@
 }
 
 .mock-segment button.active {
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--mock-white);
 }
 
 /* 버튼 */
@@ -449,18 +448,6 @@
 .mock-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.mock-btn.primary {
-  background: var(--mock-white);
-}
-
-.mock-btn.sell {
-  color: var(--mock-red);
-}
-
-.mock-btn.buy {
-  color: var(--mock-blue);
 }
 
 .mock-actions {
@@ -555,9 +542,8 @@
   width: 36px;
   height: 36px;
   padding: 0;
-  border: none;
   border-radius: 50%;
-  background: var(--mock-white);
+  font-family: Pretendard, sans-serif;
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
@@ -567,7 +553,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   width: 98px;
   height: 36px;
   background: var(--mock-white);
@@ -576,7 +561,7 @@
 
 .mock-qty-input input {
   box-sizing: border-box;
-  width: 36px;
+  width: 100%;
   padding: 0;
   text-align: center;
   font-family: Pretendard, sans-serif;
@@ -628,7 +613,7 @@
 .mock-hint {
   text-align: center;
   font-size: 12px;
-  color: var(--mock-red);
+  color: #fff;
 }
 
 /* 정보 행 */
@@ -770,6 +755,45 @@
   text-decoration: none;
 }
 
+/* 누를 수 있는 블럭: 평소에는 투명 블럭 + 흰 글씨, 선택하면 흰 블럭 + 남색 글씨 */
+.mock-cta,
+.mock-btn,
+.mock-toggle button,
+.mock-chips button,
+.mock-segment button,
+.mock-qty-stepper > button,
+.mock-list-item {
+  color: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+:is(
+    .mock-cta,
+    .mock-btn,
+    .mock-chips button,
+    .mock-qty-stepper > button,
+    .mock-list-item
+  ):is(:hover, :focus-visible, :active):not(:disabled) {
+  color: var(--mock-selected-color, var(--mock-navy));
+  background: var(--mock-white);
+}
+
+.mock-toggle button.active,
+.mock-segment button.active {
+  color: var(--mock-navy);
+}
+
+/* 매수는 빨강, 매도는 파랑 */
+.mock-btn.sell {
+  --mock-selected-color: var(--mock-blue);
+  color: var(--mock-blue);
+}
+
+.mock-btn.buy {
+  --mock-selected-color: var(--mock-red);
+  color: var(--mock-red);
+}
+
 /* 재무제표 모달 */
 .mock-overlay {
   position: fixed;
@@ -800,7 +824,8 @@
   margin-top: 12px;
 }
 
-.mock-sheet .mock-btn.primary {
+.mock-sheet .mock-btn.primary,
+.mock-sheet .mock-btn.primary:is(:hover, :focus-visible, :active) {
   background: var(--mock-navy);
   color: #fff;
 }

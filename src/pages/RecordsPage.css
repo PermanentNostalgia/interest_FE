@@ -72,7 +72,7 @@
 }
 
 .rec-summary strong {
-  font-size: 52px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 1.1;
 }
@@ -105,15 +105,15 @@
 
 .rec-progress {
   display: flex;
-  gap: 8px;
   margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
 }
 
 .rec-progress span {
   flex: 1;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35);
 }
 
 .rec-progress span.active {
@@ -148,9 +148,23 @@
   gap: 12px;
   min-height: 56px;
   padding: 0 14px 0 32px;
-  background: rgba(255, 255, 255, 0.92);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 999px;
+  backdrop-filter: blur(10px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* 선택한 블럭은 흰색 */
+.rec-row:hover,
+.rec-row:active,
+.rec-row:focus,
+.rec-row:focus-within {
+  color: var(--rec-navy);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .rec-row--tall {
@@ -204,7 +218,6 @@
 
 .rec-check {
   display: flex;
-  color: var(--rec-navy);
 }
 
 .rec-empty {
@@ -228,4 +241,12 @@
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rec-reset:hover,
+.rec-reset:focus-visible,
+.rec-reset:active {
+  color: var(--rec-navy);
+  background: rgba(255, 255, 255, 0.92);
 }
