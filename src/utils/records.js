@@ -62,6 +62,7 @@ export function saveTermResult(chapterName, correct) {
         if(SEGMENT_MATRIX[id-1][progress]==chapterName) break;
       }
     }
+    console.log(progress);
     fetch(`/api/users/me/chap1/${id}`,{
       method: "PATCH",
       headers: {"Content-Type": "application/json", Authorization: `Bearer ${getSessionToken()}`},
