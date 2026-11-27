@@ -65,7 +65,7 @@ export function saveTermResult(chapterName, correct) {
     }
     fetch(`/api/users/me/chap1/${id}`,{
       method: "PATCH",
-      headers: {"Authorization": `Bearer ${getSessionToken()}`},
+      headers: {"Content-Type": "application/json", Authorization: `Bearer ${getSessionToken()}`},
       body: JSON.stringify({
         "progress": progress,
         isCleared: true 
